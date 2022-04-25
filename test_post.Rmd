@@ -1,0 +1,23 @@
+---
+title: "New Post in Blogdown"
+author: "Lily Kasperek"
+date: 2022-04-25
+draft: false
+categories: ["R"]
+tags: ["R Markdown", "blogdown", "#rstats"]
+thumbnailImagePosition: left
+thumbnailImage: ./images/logo.png
+metaAlignment: center
+disable_comments: true
+output:
+  blogdown::html_page:
+    toc: false
+    fig_width: 8
+    css: "/css/my-style.css"
+--- 
+
+```{r}
+library(ggplot2)
+ggplot(diamonds, aes(x=carat, y=price, color=clarity)) + geom_point()
+```
+
