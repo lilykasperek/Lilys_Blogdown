@@ -1,0 +1,54 @@
+---
+title: President Salaries
+author: R package build
+date: '2022-04-26'
+slug: president-salaries
+categories: []
+tags: []
+---
+
+## New Data Set 
+
+## Potential questions:
+
+## How has President salary changed over time
+
+## Is there a predominant party or evenly split 
+
+## How much more do presidents make compared to vice presidents 
+
+## Has salary ever increased from term to term 
+
+## Aim for 4, with 1 being kable table!
+
+```{r}
+library(tidyverse)
+pvp_dataset <- read_csv("data/pvp_dataset.csv")
+pvp_dataset
+
+ggplot(data = pvp_dataset, aes(x = year, y = salary)) +
+  geom_line()
+
+pvp_dataset_2 <- read_csv("data/pvp_dataset 2.csv")
+pvp_dataset_2
+
+pres_salary <- pvp_dataset_2 %>% filter(position_title == "PRESIDENT OF THE UNITED STATES")
+pres_salary
+
+ggplot(data = pres_salary, aes(x = year, y = salary)) +
+  geom_line()
+
+ggplot(data = pres_salary, aes(x = year, y = salary, colour = salary)) +
+  geom_line() 
+
+pres_salary %>% group_by(party) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+ggplot(data = pres_salary, aes(x = salary, y = party)) +
+  geom_point()
+
+ggplot(data = pres_salary, aes(x = , y = party, colour = salary)) +
+  geom_point()
+```
+

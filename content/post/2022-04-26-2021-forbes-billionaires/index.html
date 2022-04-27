@@ -1,0 +1,411 @@
+---
+title: '2021 Forbes Billionaires '
+author: R package build
+date: '2022-04-26'
+slug: 2021-forbes-billionaires
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/plotly-binding/plotly.js"></script>
+<script src="{{< blogdown/postref >}}index_files/typedarray/typedarray.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/jquery/jquery.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/crosstalk/js/crosstalk.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/plotly-main/plotly-latest.min.js"></script>
+
+
+<div id="forbes-billionaires-2021" class="section level1">
+<h1>Forbes Billionaires 2021</h1>
+<div id="this-data-set-is-from-2021.-the-forbes-2022-billionaire-list-differs.-22" class="section level4">
+<h4>This data set is from 2021. The Forbes 2022 Billionaire List differs. 22</h4>
+<div id="who-were-the-billionaires-with-the-top-10-highest-net-worths-on-the-2021-forbes-billionaires-list-how-much-are-their-net-worths-what-industry-do-they-work-in-does-any-industry-dominate-the-others" class="section level6">
+<h6>Who were the billionaires with the top 10 highest net worths on the 2021 Forbes Billionaires List? How much are their net worths? What industry do they work in? Does any industry dominate the others?</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="1056" /></p>
+</div>
+<div id="how-many-billionaires-are-there-from-the-top-30-countries-on-the-list-do-developed-democracies-have-the-most-billionaires-on-the-list" class="section level6">
+<h6>How many billionaires are there from the top 30 countries on the list? Do developed democracies have the most billionaires on the list?</h6>
+<pre class="r"><code>country &lt;- forbes_billionaires %&gt;% group_by(Country) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n)) 
+
+country_30 &lt;- country %&gt;% slice(1:30) %&gt;%
+  mutate(order = fct_reorder(.f = Country, .x = n))
+country_30</code></pre>
+<pre><code>## # A tibble: 30 × 3
+##    Country            n order         
+##    &lt;chr&gt;          &lt;int&gt; &lt;fct&gt;         
+##  1 United States    724 United States 
+##  2 China            626 China         
+##  3 India            140 India         
+##  4 Germany          136 Germany       
+##  5 Russia           118 Russia        
+##  6 Hong Kong         71 Hong Kong     
+##  7 Brazil            65 Brazil        
+##  8 Canada            64 Canada        
+##  9 United Kingdom    56 United Kingdom
+## 10 Italy             51 Italy         
+## # … with 20 more rows</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="1056" /></p>
+</div>
+<div id="what-is-the-average-age-of-the-billionaires-from-the-10-countries-with-the-most-billionaires-is-there-a-pattern-or-do-the-averages-widely-differ-are-there-any-interesting-outliers" class="section level6">
+<h6>What is the average age of the billionaires from the 10 countries with the most billionaires? Is there a pattern or do the averages widely differ? Are there any interesting outliers?</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="how-many-billionaires-in-the-fashion-industry-fall-above-and-below-the-average-net-worth-of-american" class="section level6">
+<h6>How many Billionaires in the Fashion Industry fall above and below the average net worth of American</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="put-kable-table-with-all-the-billionaires-before-this" class="section level6">
+<h6>Put kable table with all the billionaires before this</h6>
+</div>
+<div id="myabe-change-table-from-how-many-billionaires-are-self-made-to-how-many-are-self-made-by-industry" class="section level6">
+<h6>Myabe change table from How many Billionaires are self-made to how many are self-made by industry</h6>
+<pre class="r"><code>forbes_billionaires %&gt;% select(Self_made, everything())</code></pre>
+<pre><code>## # A tibble: 2,755 × 12
+##    Self_made Name    NetWorth Country  Source   Rank   Age Residence Citizenship
+##    &lt;lgl&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;      
+##  1 TRUE      Jeff B…    177   United … Amazon      1    57 Seattle,… United Sta…
+##  2 TRUE      Elon M…    151   United … Tesla,…     2    49 Austin, … United Sta…
+##  3 FALSE     Bernar…    150   France   LVMH        3    72 Paris, F… France     
+##  4 TRUE      Bill G…    124   United … Micros…     4    65 Medina, … United Sta…
+##  5 TRUE      Mark Z…     97   United … Facebo…     5    36 Palo Alt… United Sta…
+##  6 TRUE      Warren…     96   United … Berksh…     6    90 Omaha, N… United Sta…
+##  7 TRUE      Larry …     93   United … softwa…     7    76 Lanai, H… United Sta…
+##  8 TRUE      Larry …     91.5 United … Google      8    48 Palo Alt… United Sta…
+##  9 TRUE      Sergey…     89   United … Google      9    47 Los Alto… United Sta…
+## 10 FALSE     Mukesh…     84.5 India    divers…    10    64 Mumbai, … India      
+## # … with 2,745 more rows, and 3 more variables: Status &lt;chr&gt;, Children &lt;dbl&gt;,
+## #   Education &lt;chr&gt;</code></pre>
+<pre class="r"><code>self_made &lt;- forbes_billionaires %&gt;% group_by(Self_made) %&gt;%
+  summarise(n = n()) %&gt;%
+  filter(!is.na(Self_made)) 
+
+ggplot(data = self_made, aes(x = Self_made, y = n, fill = Self_made)) +
+  geom_col(colour = &quot;black&quot;) +
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  labs(x = &quot; &quot;,
+       y = &quot; &quot;,
+       title = &quot;How Many Forbes Billionaires Are Self-Made?&quot;,
+       fill = &quot; &quot;) +
+  theme(plot.title = element_text(family = &quot;mono&quot;,
+                                  face = &quot;bold&quot;,
+                                  margin = margin(c(t = 30)),
+                                  hjust = 0.5,
+                                  vjust = 8,
+                                  size = 15),
+        legend.text = element_text(family = &quot;mono&quot;),
+        axis.text = element_text(family = &quot;mono&quot;),
+        axis.text.x = element_text(size = 15,
+                                   face = &quot;bold&quot;),
+        axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+             plot.margin = margin(1, 1, 1, 1, &quot;cm&quot;),
+        plot.background = element_rect(
+    fill = &quot;grey90&quot;,
+    colour = &quot;black&quot;,
+    size = 3),
+        legend.position = &quot;none&quot;) +
+  geom_label(data = self_made, aes(label = n),
+              fill = &quot;white&quot;,
+             label.size = 0.5) </code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="make-just-one-more-visualization-that-makes-sense" class="section level6">
+<h6>Make just one more visualization that makes sense</h6>
+<pre class="r"><code>industry &lt;- billionaires %&gt;% group_by(Industry) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))
+industry</code></pre>
+<pre><code>## # A tibble: 18 × 2
+##    Industry                       n
+##    &lt;chr&gt;                      &lt;int&gt;
+##  1 Finance &amp; Investments        371
+##  2 Technology                   365
+##  3 Manufacturing                331
+##  4 Fashion &amp; Retail             273
+##  5 Healthcare                   221
+##  6 Food &amp; Beverage              219
+##  7 Real Estate                  215
+##  8 Diversified                  188
+##  9 Energy                       100
+## 10 Media &amp; Entertainment         95
+## 11 Service                       75
+## 12 Metals &amp; Mining               74
+## 13 Automotive                    68
+## 14 Construction &amp; Engineering    44
+## 15 Logistics                     35
+## 16 Telecom                       32
+## 17 Gambling &amp; Casinos            25
+## 18 Sports                        24</code></pre>
+<pre class="r"><code>combined_billionaires &lt;- left_join(forbes_billionaires, billionaires, by = c(&quot;Name&quot; = &quot;Name&quot;))
+
+
+combined_billionaires2 &lt;- combined_billionaires %&gt;% separate(col = Education, into = c(&quot;Degree&quot;, &quot;University&quot;),
+                                 sep = &quot;, &quot;)</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 496 rows [6, 7, 8, 9,
+## 10, 14, 19, 20, 21, 23, 25, 27, 29, 46, 49, 51, 59, 68, 71, 73, ...].</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 19 rows [101,
+## 137, 291, 375, 457, 472, 596, 913, 984, 1143, 1471, 1656, 2075, 2491, 2508,
+## 2621, 2661, 2742, 2743].</code></pre>
+<pre class="r"><code>harvard &lt;- combined_billionaires2 %&gt;% filter(University == &quot;Harvard University&quot;) 
+harvard</code></pre>
+<pre><code>## # A tibble: 26 × 19
+##    Name  NetWorth.x Country.x Source.x Rank.x Age.x Residence Citizenship Status
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt; 
+##  1 Bill…      124   United S… Microso…      4    65 Medina, … United Sta… Divor…
+##  2 Mark…       97   United S… Facebook      5    36 Palo Alt… United Sta… Marri…
+##  3 Dust…       17.8 United S… Facebook    107    36 San Fran… United Sta… Marri…
+##  4 Jorg…       16.9 Brazil    beer        114    81 Zurich, … Brazil      Marri…
+##  5 Ken …       16   United S… hedge f…    119    52 Chicago,… United Sta… Divor…
+##  6 Edua…       14.6 Brazil    Facebook    140    39 Singapor… Brazil      Marri…
+##  7 Nath…       12.4 United S… Airbnb      177    37 San Fran… United Sta… Marri…
+##  8 Edwa…       10.3 United S… money m…    219    90 Boston, … United Sta… Marri…
+##  9 Alex…        7   Brazil    investm…    369    54 Greenwic… Brazil      Marri…
+## 10 Gust…        7   Sweden    investm…    369    83 Stockhol… Sweden      Marri…
+## # … with 16 more rows, and 10 more variables: Children &lt;dbl&gt;, Degree &lt;chr&gt;,
+## #   University &lt;chr&gt;, Self_made &lt;lgl&gt;, NetWorth.y &lt;chr&gt;, Country.y &lt;chr&gt;,
+## #   Source.y &lt;chr&gt;, Rank.y &lt;dbl&gt;, Age.y &lt;chr&gt;, Industry &lt;chr&gt;</code></pre>
+<pre class="r"><code>harvard %&gt;% group_by(Industry) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 7 × 2
+##   Industry                  n
+##   &lt;chr&gt;                 &lt;int&gt;
+## 1 Finance &amp; Investments    11
+## 2 Technology                7
+## 3 Diversified               3
+## 4 Food &amp; Beverage           2
+## 5 Fashion &amp; Retail          1
+## 6 Gambling &amp; Casinos        1
+## 7 Healthcare                1</code></pre>
+<pre class="r"><code>ggplot(data = harvard, aes(x = Degree, y = NetWorth.x)) +
+  geom_point() +
+  coord_flip() </code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>## should do something with this to show the degree, self_made, networth, etc. 
+
+usa_billionaires &lt;- combined_billionaires %&gt;% filter(Country.x == &quot;United States&quot;)
+ggplot(data = usa_billionaires, aes(x = Self_made)) +
+  geom_bar() </code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<pre class="r"><code>forbes_billionaires %&gt;% group_by(Status) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 9 × 2
+##   Status                 n
+##   &lt;chr&gt;              &lt;int&gt;
+## 1 Married             1734
+## 2 &lt;NA&gt;                 665
+## 3 Divorced             144
+## 4 Widowed               95
+## 5 Single                74
+## 6 In Relationship       21
+## 7 Separated             10
+## 8 Widowed, Remarried     8
+## 9 Engaged                4</code></pre>
+<pre class="r"><code>tidy_education &lt;- forbes_billionaires %&gt;% 
+  separate(col = Education, into = c(&quot;Degree&quot;, &quot;University&quot;),
+                                 sep = &quot;, &quot;) %&gt;%
+  select(Degree, University, everything())</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 496 rows [6, 7, 8, 9,
+## 10, 14, 19, 20, 21, 23, 25, 27, 29, 46, 49, 51, 59, 68, 71, 73, ...].</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 19 rows [101,
+## 137, 291, 375, 457, 472, 596, 911, 982, 1141, 1468, 1652, 2069, 2485, 2502,
+## 2615, 2655, 2736, 2737].</code></pre>
+<pre class="r"><code>tidy_education</code></pre>
+<pre><code>## # A tibble: 2,755 × 13
+##    Degree   University     Name    NetWorth Country Source  Rank   Age Residence
+##    &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
+##  1 Bachelo… Princeton Uni… Jeff B…    177   United… Amazon     1    57 Seattle,…
+##  2 Bachelo… University of… Elon M…    151   United… Tesla…     2    49 Austin, …
+##  3 Bachelo… Ecole Polytec… Bernar…    150   France  LVMH       3    72 Paris, F…
+##  4 Drop Out Harvard Unive… Bill G…    124   United… Micro…     4    65 Medina, …
+##  5 Drop Out Harvard Unive… Mark Z…     97   United… Faceb…     5    36 Palo Alt…
+##  6 Master … Columbia Univ… Warren…     96   United… Berks…     6    90 Omaha, N…
+##  7 Drop Out University of… Larry …     93   United… softw…     7    76 Lanai, H…
+##  8 Master … Stanford Univ… Larry …     91.5 United… Google     8    48 Palo Alt…
+##  9 Master … Stanford Univ… Sergey…     89   United… Google     9    47 Los Alto…
+## 10 Drop Out Stanford Univ… Mukesh…     84.5 India   diver…    10    64 Mumbai, …
+## # … with 2,745 more rows, and 4 more variables: Citizenship &lt;chr&gt;,
+## #   Status &lt;chr&gt;, Children &lt;dbl&gt;, Self_made &lt;lgl&gt;</code></pre>
+<pre class="r"><code>tidy_education %&gt;% group_by(Degree) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 67 × 2
+##    Degree                                 n
+##    &lt;chr&gt;                              &lt;int&gt;
+##  1 &lt;NA&gt;                                1346
+##  2 Bachelor of Arts/Science             638
+##  3 Master of Business Administration    166
+##  4 Master of Science                     82
+##  5 Drop Out                              74
+##  6 Bachelor of Science                   46
+##  7 Bachelor of Science in Engineering    44
+##  8 Doctorate                             40
+##  9 Diploma                               35
+## 10 Bachelor of Arts/Economics            29
+## # … with 57 more rows</code></pre>
+<pre class="r"><code>tidy_education %&gt;% filter(University == &quot;Harvard University&quot;)</code></pre>
+<pre><code>## # A tibble: 26 × 13
+##    Degree    University  Name    NetWorth Country  Source  Rank   Age Residence 
+##    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
+##  1 Drop Out  Harvard Un… Bill G…    124   United … Micro…     4    65 Medina, W…
+##  2 Drop Out  Harvard Un… Mark Z…     97   United … Faceb…     5    36 Palo Alto…
+##  3 Drop Out  Harvard Un… Dustin…     17.8 United … Faceb…   107    36 San Franc…
+##  4 Bachelor… Harvard Un… Jorge …     16.9 Brazil   beer     114    81 Zurich, S…
+##  5 Bachelor… Harvard Un… Ken Gr…     16   United … hedge…   119    52 Chicago, …
+##  6 Bachelor… Harvard Un… Eduard…     14.6 Brazil   Faceb…   140    39 Singapore…
+##  7 Bachelor… Harvard Un… Nathan…     12.4 United … Airbnb   177    37 San Franc…
+##  8 Bachelor… Harvard Un… Edward…     10.3 United … money…   219    90 Boston, M…
+##  9 EMBA      Harvard Un… Alexan…      7   Brazil   inves…   369    54 Greenwich…
+## 10 Master o… Harvard Un… Gustaf…      7   Sweden   inves…   369    83 Stockholm…
+## # … with 16 more rows, and 4 more variables: Citizenship &lt;chr&gt;, Status &lt;chr&gt;,
+## #   Children &lt;dbl&gt;, Self_made &lt;lgl&gt;</code></pre>
+<pre class="r"><code>tidy_education2 &lt;- tidy_education %&gt;% filter(Degree == &quot;Bachelor of Arts/Science&quot; |
+                          Degree == &quot;Master of Business Administration&quot; |
+                          Degree == &quot;Master of Science&quot; |
+                          Degree == &quot;Drop Out&quot; |
+                          Degree == &quot;Bachelor of Science&quot; |
+                          Degree == &quot;Bachelor of Science in Engineering&quot; |
+                          Degree == &quot;Doctorate&quot; |
+                          Degree == &quot;Diploma&quot; |
+                          Degree == &quot;Bachelor of Arts/Economic&quot;)
+
+
+ggplot(data = tidy_education2, aes(x = Degree, y = NetWorth)) +
+  geom_point(alpha = 0.4) +
+  coord_flip() +
+  labs(x = &quot;Education Level&quot;,
+       y = &quot;Net Worth&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = tidy_education2, aes(x = Degree, y = NetWorth)) +
+  geom_jitter(alpha = 0.4) +
+  coord_flip() +
+  labs(x = &quot;Education Level&quot;,
+       y = &quot;Net Worth&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-4.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = tidy_education2, aes(x = Degree, y = NetWorth)) +
+  geom_violin() +
+  coord_flip()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-5.png" width="672" /></p>
+</div>
+<div id="showing-all-u.s.-billionaires" class="section level6">
+<h6>Showing All U.S. Billionaires</h6>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>us_forbes_billionaires &lt;- combined_billionaires %&gt;% filter(Country.x == &quot;United States&quot;)
+us_forbes_billionaires</code></pre>
+<pre><code>## # A tibble: 724 × 18
+##    Name  NetWorth.x Country.x Source.x Rank.x Age.x Residence Citizenship Status
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt; 
+##  1 Jeff…      177   United S… Amazon        1    57 Seattle,… United Sta… In Re…
+##  2 Elon…      151   United S… Tesla, …      2    49 Austin, … United Sta… In Re…
+##  3 Bill…      124   United S… Microso…      4    65 Medina, … United Sta… Divor…
+##  4 Mark…       97   United S… Facebook      5    36 Palo Alt… United Sta… Marri…
+##  5 Warr…       96   United S… Berkshi…      6    90 Omaha, N… United Sta… Widow…
+##  6 Larr…       93   United S… software      7    76 Lanai, H… United Sta… In Re…
+##  7 Larr…       91.5 United S… Google        8    48 Palo Alt… United Sta… Marri…
+##  8 Serg…       89   United S… Google        9    47 Los Alto… United Sta… Marri…
+##  9 Stev…       68.7 United S… Microso…     14    65 Hunts Po… United Sta… Marri…
+## 10 Alic…       61.8 United S… Walmart      17    71 Fort Wor… United Sta… Divor…
+## # … with 714 more rows, and 9 more variables: Children &lt;dbl&gt;, Education &lt;chr&gt;,
+## #   Self_made &lt;lgl&gt;, NetWorth.y &lt;chr&gt;, Country.y &lt;chr&gt;, Source.y &lt;chr&gt;,
+## #   Rank.y &lt;dbl&gt;, Age.y &lt;chr&gt;, Industry &lt;chr&gt;</code></pre>
+<pre class="r"><code>us_forbes_billionaires %&gt;% group_by(Industry) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 18 × 2
+##    Industry                       n
+##    &lt;chr&gt;                      &lt;int&gt;
+##  1 Finance &amp; Investments        189
+##  2 Technology                   140
+##  3 Food &amp; Beverage               65
+##  4 Fashion &amp; Retail              54
+##  5 Real Estate                   49
+##  6 Media &amp; Entertainment         38
+##  7 Healthcare                    35
+##  8 Energy                        33
+##  9 Manufacturing                 28
+## 10 Sports                        23
+## 11 Service                       20
+## 12 Automotive                    18
+## 13 Diversified                   11
+## 14 Gambling &amp; Casinos             6
+## 15 Logistics                      6
+## 16 Telecom                        4
+## 17 Construction &amp; Engineering     3
+## 18 Metals &amp; Mining                2</code></pre>
+<pre class="r"><code>plot10 &lt;- ggplot(data = us_forbes_billionaires, aes(x = NetWorth.x, y = Age.x,
+                                                    label = Name, colour = Industry)) +
+  geom_jitter() +
+  labs(x = &quot;NetWorth&quot;,
+       y = &quot;Age&quot;,
+       title = &quot;Billionaires in the U.S.&quot;) +
+  theme(plot.title = element_text(face = &quot;bold&quot;,
+                                  size = 15,
+                                  margin = margin(c(t = 10, b = 10))),
+        axis.ticks = element_blank(),
+        legend.title = element_text(face = &quot;bold&quot;),
+        axis.title = element_text(face = &quot;bold&quot;))
+
+ggplotly(plot10, tooltip = &quot;label&quot;)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":[{"x":[151.024008967951,15.9273690749146,7.9859127314575,7.37405288942158,4.12065104903653,3.860481017977,3.47271725196391,3.42684852549806,2.781687662974,2.4014009075053,2.40857808755711,2.07144448550418,2.07128524839878,1.78875779369846,1.62045654946938,1.57057130439207,1.43749828275293,0.963387711402029],"y":[49.2198601443321,62.9586413886398,70.3032072979957,39.1476851494983,56.2336749684066,69.8457776000723,70.7628999618813,37.7500444049016,88.1694891788065,77.3606167158112,25.9849701214582,78.6340082837269,83.655878932029,72.928181553632,57.0742954783142,76.0823334731162,39.0138418678194,51.0948066264391],"text":["Name: Elon Musk","Name: Ernest Garcia, II.","Name: Shahid Khan","Name: Ernest Garcia, III.","Name: Dan Friedkin","Name: Mark Shoen","Name: E. Joe Shoen","Name: RJ Scaringe","Name: Norman Braman","Name: Gail Miller","Name: Austin Russell","Name: Herb Chambers","Name: Roger Penske","Name: Willis Johnson","Name: Henrik Fisker","Name: Donald Foss","Name: Trevor Milton","Name: A. Jayson Adair"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Automotive","legendgroup":"Automotive","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[8.015320018325,2.88978971114382,1.18517902372405],"y":[73.7560323050246,68.8695663794875,58.2785619111732],"text":["Name: Diane Hendricks","Name: Riley Bechtel & family","Name: Jorge Mas"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(232,133,38,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(232,133,38,1)"}},"hoveron":"points","name":"Construction & Engineering","legendgroup":"Construction & Engineering","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[46.4089245584607,46.4027363394946,31.9632877667621,2.08529345549643,1.51303072143346,1.36490469461307,1.42948425523937,1.43572959337383,1.21978227881715,1.18885350214317,0.994369444139302],"y":[84.9141504390165,58.8217619176954,63.1781689684838,86.0957146948203,92.6765214461833,59.701619435288,63.8520096126944,67.0743058159947,69.6610852537677,72.1767294911668,85.3072247186676],"text":["Name: Charles Koch","Name: Julia Koch & family","Name: Len Blavatnik","Name: Phil Ruffin","Name: Billy Joe (Red) McCombs","Name: James Duff","Name: Thomas Duff","Name: Jonathan Tisch","Name: Laurie Tisch","Name: Steven Tisch","Name: J. Wayne Weaver"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(211,146,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(211,146,0,1)"}},"hoveron":"points","name":"Diversified","legendgroup":"Diversified","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[9.42913426170126,7.01820551754907,6.01727933149785,5.98617531102151,6.01673117753118,6.03835272129625,5.80968710837886,5.42048883292824,5.09753763403743,5.03020791472867,4.22878078119829,4.01854025555775,3.43520806381479,3.42909874619916,2.89157572250813,2.77523479351774,2.17262583406642,2.22822371378541,2.10560223925859,2.07172586316243,2.10344419524074,1.98309205969796,2.03204111795872,1.93820684846491,1.92729099225253,1.70689419221133,1.62513924116269,1.47430943798274,1.40965619860217,1.31471919069067,1.10173929402605,1.10034988058731,1.11599449567497],"y":[74.615786440298,76.3349379424006,56.6812362631783,38.1724078977481,50.9052967760712,59.2281765880063,77.8123257288709,69.6168432366103,73.2889505809173,89.1820264607668,77.8171238802373,68.9297364862636,81.8303859297186,65.0072959907353,79.0511712312698,72.3892202394083,75.0379459895194,56.2365894583985,82.6795590715483,79.363478048332,87.2592339465395,61.8051824202761,91.7431112954393,63.6946459587663,null,63.1972716039047,80.9615353884175,71.7972094494849,70.6101232504472,69.1933425996453,58.6288125222549,64.6630742222071,64.3552803199738],"text":["Name: Harold Hamm & family","Name: Richard Kinder","Name: Dannine Avara","Name: Scott Duncan","Name: Milane Frantz","Name: Randa Duncan Williams","Name: George Kaiser","Name: Terrence Pegula","Name: Robert Bass","Name: Walter Scott, Jr. & family","Name: Ray Lee Hunt","Name: Trevor Rees-Jones","Name: Lynn Schusterman","Name: Kelcy Warren","Name: Sid Bass","Name: John Catsimatidis","Name: Edward Bass","Name: Dean Solon","Name: George Bishop","Name: Ray Davis","Name: Gordon Getty","Name: Jeffery Hildebrand","Name: W. Herbert Hunt","Name: Lee Bass","Name: Evgeny (Eugene) Shvidler","Name: Paul Foster","Name: William Koch","Name: Michael Polsky","Name: Timothy Headington","Name: Farris Wilks","Name: Ron Corio","Name: Michael S. Smith","Name: Dan Wilks"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(183,159,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(183,159,0,1)"}},"hoveron":"points","name":"Energy","legendgroup":"Energy","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[61.8087214189582,60.1986059112474,59.4652342117392,49.879627688285,25.5226375823654,15.5600256109796,14.1786065265723,12.601508450564,10.8318922541849,8.43967263318598,7.57017555927858,7.50976607514545,7.23737848177552,7.21559816483408,7.1049084004946,6.12314575452358,6.0273296206817,5.47523429889232,4.70475114418194,4.67433114293963,4.11429087873548,4.1296811758168,3.82732074253261,3.69593273324892,3.53940943032503,3.41680249780416,3.12515994548798,2.99386540591717,2.79769309859723,2.81268200138584,2.76038185205311,2.66561670871452,2.7117103205435,2.72510903930292,2.42098087307066,2.27069525204599,2.31653638428077,2.27845940006897,2.06373464869335,1.99725353984162,1.87078865582123,1.87506807710975,1.80103617034853,1.78899718694389,1.51678523885086,1.39737288566306,1.41256149800494,1.3891119995527,1.40098689824343,1.43951478935778,1.08401262678206,1.11319031080231,1.08961540745571,1.01471731221303],"y":[70.7251106886193,71.7063816346228,76.2694132436067,83.0740500919521,88.347234287858,34.2168710960075,81.1367245232686,null,null,71.8169726414606,79.0478051329032,68.7672111002728,91.0827881742269,71.6919713329524,81.3634868353605,83.2964121770114,48.2771478921175,76.6297577511519,80.3187785796821,61.1165690675378,60.7208642402664,73.176849604398,51.0920052479953,72.0919606022537,48.3560504036024,72.2036621391773,58.7160088110715,67.1695592047647,89.0836491212249,62.7213785788044,83.9787487529218,70.622724016197,77.15520874504,70.951291026175,58.0890958514065,71.6231965573505,74.6185179440305,76.2110674688593,64.2109799576923,47.9143318520859,67.0827916808426,62.1809696264565,82.0491975642741,42.9074271811172,59.2928677164018,73.9472086139023,72.6901097714901,78.9420167086646,92.6235048282892,65.7792717222124,77.0368961166591,84.8376259928569,86.7909093054011,40.3554477352649],"text":["Name: Alice Walton","Name: Jim Walton","Name: Rob Walton","Name: Phil Knight & family","Name: Leonard Lauder","Name: Lukas Walton","Name: John Menard, Jr.","Name: Hank & Doug Meijer","Name: Tom & Judy Love","Name: Ann Walton Kroenke","Name: David Green & family","Name: Nancy Walton Laurie","Name: Bernard Marcus","Name: Christy Walton","Name: Ralph Lauren","Name: Les Wexner & family","Name: Jane Lauder","Name: Ronald Lauder","Name: Richard Schulze","Name: Eric Smidt","Name: William Lauder","Name: John Morris","Name: Aerin Lauder","Name: Wang Roger","Name: Michael Rubin","Name: Frank VanderSloot","Name: John Fisher","Name: Jimmy Haslam","Name: Doris Fisher","Name: Gary Friedman","Name: Drayton McLane, Jr.","Name: Timothy Boyle","Name: John Paul DeJoria","Name: James Jannard","Name: Todd Christopher","Name: Bill Alfond","Name: Susan Alfond","Name: Ted Alfond","Name: William Fisher","Name: Kevin Plank","Name: Robert Fisher","Name: Bill Haslam","Name: Yvon Chouinard","Name: Kanye West","Name: Gary Lauder","Name: Mimi Haas","Name: Richard Hayne","Name: Daniel Hirschfeld","Name: Sidney Kimmel","Name: Edward Stack","Name: Paul Fireman","Name: Anne Gittinger","Name: Bruce Nordstrom","Name: Kim Kardashian West"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(147,170,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(147,170,0,1)"}},"hoveron":"points","name":"Fashion & Retail","legendgroup":"Fashion & Retail","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[95.9936414477415,51.9305667495541,24.9868603250571,24.6391130693443,21.8989478654228,20.9395369941182,20.3176304503717,15.9730010303669,16.0037909402139,15.7986275629327,14.5199492875859,11.9703827447817,10.5849472746067,10.2892703262903,10.3178525741398,10.081013460122,9.66495685137808,9.61538624823093,8.73409589249641,8.60316447848454,8.63361444855109,7.91471811320633,7.58985303999856,7.28936184128746,7.32229674594477,7.01247364910319,6.89431949777529,6.624733443968,6.50195162465796,6.53369944343343,6.48281336186454,6.02540677605197,5.78847048833966,5.7329443612881,5.56231530597433,5.53416826989502,5.19107800209895,4.97707800384611,5.01909615164623,5.02829399093986,5.01655978200957,4.88006455922499,4.91483991205692,4.93359555523843,4.8300145127438,4.81705970939249,4.66893138999119,4.6687994585745,4.49797940999269,4.53280593957752,4.47083460219204,4.52996680652723,4.50712947649881,4.49606196431443,4.40799988035113,4.29527380961925,4.27300137842074,4.2657725020498,4.09017401626334,4.12593665754422,4.00701661603525,4.03846314191818,3.90376381538808,3.82547804662958,3.6746871073544,3.73020568400621,3.70165066845715,3.72837564267218,3.696126054544,3.72381734862924,3.72313309725374,3.66075376203284,3.5876611469686,3.62093038335443,3.62326731910929,3.52705812178552,3.53017094939947,3.47828322516754,3.37508915049955,3.39561464298517,3.38790652269497,3.38635790783912,3.33231961829588,3.33740404957905,3.32640961145982,3.19663605440408,3.06808162612841,3.01928137309849,2.968929228466,2.96928281566128,2.9784395185113,2.98030240990222,3.03020162824541,2.87189367251471,2.83549580616876,2.82562753923237,2.81400873148814,2.8127282025665,2.56530287489295,2.63173670722172,2.52089477829635,2.53176189096644,2.49086253114045,2.50235040636733,2.46849316872656,2.52845278056338,2.39378666337579,2.32442648654804,2.32152373481542,2.3030804198049,2.20253545980901,2.17653930874541,2.09506908543408,2.11268809039146,2.11838898634538,2.10167715894058,2.09031930495054,1.98133327005431,2.02429320789874,1.97412773249671,1.98909994386137,2.01515060292557,2.00113620664924,2.01245267087594,2.03004279883578,1.99824724111706,1.88588656006381,1.93279399961233,1.92162262184545,1.90427794402465,1.89730473870412,1.91321419721469,1.89431555124,1.90144881507382,1.83063516037539,1.79697800310329,1.76927279653028,1.81266172919422,1.83802537763491,1.79606982562691,1.76267774540931,1.76253099340946,1.66100892510265,1.72818504555151,1.7243410708569,1.66261690920219,1.72360177354887,1.58603105526417,1.628137718793,1.52256503343582,1.51928013589233,1.46380831394345,1.49839575177059,1.47508217861876,1.47573768371716,1.52891611566767,1.53265553144738,1.52743277946487,1.4280731742084,1.40029385814443,1.40515723049641,1.39253517633304,1.4238811105676,1.43727924356237,1.2844587117061,1.30951874725521,1.27488095730543,1.27061749514192,1.19968444034457,1.23988770276308,1.16261312991381,1.22304450718686,1.22419609326869,1.1828972389549,1.23624506829306,1.23790752416477,1.07774381613359,1.06043863328174,1.07849847014993,1.13087235951796,1.09012232011184,1.092218319159,1.06216376705095,0.977679537441582,0.995478582661599,1.03769298514351,0.976465405840427,1.02903559152037,0.981001060418785],"y":[89.8179289478809,58.6188218185678,76.1223390908912,82.6109400430694,73.8219795510173,58.8301386497915,71.2518931472674,64.0048093758523,52.1824765047058,85.3923027560115,62.9788998225704,61.6809909800068,82.8360778318718,45.1385377625003,89.6773553317413,81.0400997629389,40.6819928871468,72.0922907983884,28.6897476594895,69.05058590509,89.6283149098977,67.7124717419967,76.658753904514,76.8082381332293,69.7915359787643,65.86714170333,null,75.9080146649852,37.7086426980793,50.7488517060876,86.261591312848,57.6434354303405,62.6203697361052,56.2925015764311,66.7953372301534,69.7889709265903,63.8238009709865,55.8827928194776,48.860391077958,56.8207055594772,53.699483986944,87.7381995797157,63.1204339589924,53.0628207707778,55.9077330924571,57.8945085309446,84.9014032697305,60.2977546742186,76.802587217465,51.1917749173939,58.8837952610105,70.0778898617253,88.3830288801342,63.0630349833518,50.3007102508098,85.2547859312967,58.968825445883,75.7660609880462,77.6533367987722,80.1021839492023,85.6267598541453,57.739725795202,64.6362818893045,73.7735414696857,74.3024759560823,78.3094542101026,78.9560827534646,70.7338961193338,59.6021658224985,61.1112806955352,64.9560900485143,80.8200511269271,77.6034274630249,60.3902963668108,75.3577560154721,59.1696248739958,64.9411279592663,55.759442768991,70.6322927741334,64.0555021502078,59.9814852230251,83.0303066983819,47.1831015434116,65.2899802250788,89.2990158045664,76.7436527412385,62.2688792007044,45.141225281544,46.7960843272507,67.9706640113145,43.1994775392115,39.3954806789756,38.6711546016857,57.0735395124182,53.7841391067952,94.7274869978428,85.0150031400844,64.2817544626072,55.6229528088123,60.8360223734751,73.622432420589,78.0062196649611,75.7317509438843,null,67.3768176699057,43.8201105231419,60.9636224038899,61.1766319056973,59.3532800151035,82.9761428721249,62.2724894661456,45.0468324817717,65.2482055557892,52.7965237272903,75.2658386221156,74.8822308681905,45.8361222228035,82.8339979859069,63.7741322603077,72.2009690728039,98.9293238114566,76.8340736530721,46.1976436292753,96.9754277098924,64.2620071412995,69.6838130498305,52.3486870376393,53.6467526223511,60.7762800216675,31.8524746527895,76.0830701779574,68.9593583192676,56.7469456341118,50.8549296056852,null,74.6758366718888,65.2807551696897,78.8735418073833,55.9342178443447,78.2285183640197,59.6608695518225,63.0700122479349,49.2277493989095,58.958008685708,63.316676825285,58.0523855146021,76.6027101526037,77.9558819601312,43.7237826446071,80.7463426569477,67.6310402609408,61.8810104852542,76.7771713016555,71.1227333707735,63.6597043823451,83.1428964184597,47.6394003026187,91.7796304028481,54.0641371604055,64.3187472391874,62.3110562000424,63.0479321036488,93.0073433777317,78.2980404797941,48.1144483504817,46.729680772312,51.9051395822316,46.2086825661361,83.9941243622452,59.0400227328762,63.0593044215813,61.1922469081357,44.1986514693126,68.3939158435911,44.722310080938,79.6861645441502,66.3376238236204,58.7828227479011,75.0276629932225,60.3607565874234,84.8351327175274,58.6367895029485,72.0159130966291,36.0864326806739,81.0030674923211,68.2682575188577,60.8532828180119,33.9924876658246,87.8763464741409],"text":["Name: Warren Buffett","Name: Daniel Gilbert","Name: Thomas Peterffy","Name: Jim Simons","Name: Stephen Schwarzman","Name: Abigail Johnson","Name: Ray Dalio","Name: Steve Cohen","Name: Ken Griffin","Name: Carl Icahn","Name: David Tepper","Name: Jeff Yass","Name: Charles Schwab","Name: Chase Coleman, III.","Name: Edward Johnson, III.","Name: Philip Anschutz","Name: Mat Ishbia","Name: Israel Englander","Name: Sam Bankman-Fried","Name: Leon Black","Name: George Soros","Name: Andrew Beal","Name: George Roberts","Name: Henry Kravis","Name: David Shaw","Name: Paul Tudor Jones, II.","Name: Eli Broad","Name: Bruce Kovner","Name: Brian Armstrong","Name: John Overdeck","Name: David Siegel","Name: Robert F. Smith","Name: Douglas Leone","Name: Tom Gores","Name: Stanley Druckenmiller","Name: Ken Fisher","Name: Joe Mansueto","Name: Joshua Harris","Name: Daniel Ziff","Name: Dirk Ziff","Name: Robert Ziff","Name: Charles B. Johnson","Name: Karen Pritzker","Name: Peter Thiel","Name: Edward Johnson, IV.","Name: Elizabeth Johnson","Name: Ken Langone","Name: Mark Walter","Name: Ron Baron","Name: Jonathan Gray","Name: Sami Mnaymneh","Name: Thomas Pritzker","Name: Julian Robertson, Jr.","Name: Tony Tamer","Name: Orlando Bravo","Name: Thomas Hagen","Name: Antony Ressler","Name: Paul Singer","Name: David Bonderman","Name: Rupert Johnson, Jr.","Name: Ira Rennert","Name: Marc Rowan","Name: Stephen Mandel, Jr.","Name: Daniel D'Aniello","Name: Michael Milken","Name: Ronald Perelman","Name: J. Joe Ricketts & family","Name: David Rubenstein","Name: Barry Sternlicht","Name: Mark Stevens","Name: Vincent Viola","Name: Herbert Wertheim","Name: Peter Kellogg","Name: Daniel Och","Name: Rodger Riney & family","Name: Daniel Loeb","Name: John Paulson","Name: J.B. Pritzker","Name: William Conway, Jr.","Name: Steven Klinsky","Name: Chris Larsen","Name: Patrick Ryan","Name: John Arnold","Name: Joseph Edelman","Name: Bernard Saul, II.","Name: Don Hankey","Name: Penny Pritzker","Name: Behdad Eghbali","Name: Jose E. Feliciano","Name: Alec Gores","Name: Justin Ishbia","Name: Cameron Winklevoss","Name: Tyler Winklevoss","Name: Pablo Legorreta","Name: William Ackman","Name: David Gottesman","Name: T. Denny Sanford","Name: Warren Stephens","Name: Anthony Hsieh","Name: Daniel Pritzker","Name: William Berkley","Name: Leon G. Cooperman","Name: Gerald Ford","Name: Mark & Robyn Jones","Name: John Pritzker","Name: Daniel Sundheim","Name: Stephen Feinberg","Name: Jim Coulter","Name: Noam Gottesman","Name: Stewart Horejsi & family","Name: Jeffrey Gundlach","Name: Max Levchin","Name: Bruce Karsh","Name: Philippe Laffont","Name: Henry Laufer","Name: Howard Marks","Name: Jeffrey Talpins","Name: J. Hyatt Brown","Name: Glenn Dubin","Name: J. Tomilson Hill","Name: George Joseph","Name: Thomas Lee","Name: Jed McCaleb","Name: Charles Munger","Name: Jonathan Nelson","Name: Jennifer Pritzker","Name: Felix Baker","Name: Julian Baker","Name: James Dinan","Name: Fred Ehrsam","Name: William Foley, II.","Name: Hamilton James","Name: Michael Kim","Name: Larry Robbins","Name: O. Francis Biondi","Name: David Booth","Name: Jamie Dimon","Name: Mario Gabelli","Name: Brian Higgins","Name: Thomas James","Name: Marc Lasry","Name: Henry Swieca","Name: Marc Andreessen","Name: Nicolas Berggruen","Name: Henry Engelhardt","Name: Edward Lampert","Name: Nicholas Pritzker","Name: Nelson Peltz","Name: Barry Silbert","Name: Herbert Allen, Jr. & family","Name: Ron Burkle","Name: Tim Draper","Name: Bill Gross","Name: Sue Gross","Name: Seth Klarman","Name: Duncan MacMillan","Name: Matthew Roszak","Name: Fayez Sarofim","Name: Clifford Asness","Name: Louis Bacon","Name: Scott Kapnick","Name: Thomas Steyer","Name: Wilma Tisch","Name: Alfred West, Jr.","Name: Chris Britt","Name: Egon Durban","Name: Kenneth Hao","Name: Greg Mondre","Name: Thomas Bailey","Name: Wesley Edens","Name: J. Christopher Flowers","Name: Lawrence Golub","Name: Chamath Palihapitiya","Name: Michael Price","Name: Chris Sacca","Name: Michael Steinhardt","Name: Lloyd Blankfein","Name: David Golub","Name: Richard Kayne","Name: Nancy Lerner","Name: Norma Lerner","Name: Randolph Lerner","Name: Carl Thoma","Name: Baiju Bhatt","Name: Wilbur 'Ed' Bosarge, Jr.","Name: Larry Fink","Name: Hartley Rogers","Name: Vlad Tenev","Name: Sandy Weill"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(94,179,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(94,179,0,1)"}},"hoveron":"points","name":"Finance & Investments","legendgroup":"Finance & Investments","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[31.3122485655732,31.3207194068655,8.2742385607399,8.27516073076055,7.81203798342496,7.77229306008667,7.80620018219575,7.80955217845738,7.12806900339201,6.41783032942563,5.50893114341423,5.520718285162,5.40055753400549,4.90775283290073,4.62707712955773,4.62357142787427,4.61514161128551,4.41453758830205,4.0370421221666,3.76680059889331,3.69372966265306,3.72331262296066,3.70851723132655,3.61066614340991,3.57930899819359,3.60722892770544,3.63640278307721,3.37703133333474,3.29292053671554,3.31452032081783,2.96253722561523,3.00897435702384,2.91666039297357,2.90167747691274,2.56013811616227,2.51696198530495,2.52972200147808,2.36495553180575,2.2655651226081,2.26963266998529,2.08360134970397,2.11937958164141,2.06996661255136,2.12704051434994,2.13859479444101,1.99180589044467,1.96760588120669,1.71673082470894,1.66101310206577,1.6951950677298,1.73201020158827,1.73511415639892,1.70150797948241,1.70601155450568,1.70938114097342,1.42741165162995,1.3343009775877,1.20828637814149,1.17266843855381,1.07797715814784,1.08965014575049,1.06138066442683,1.1105130293034,1.06455657783896,1.00231968736276],"y":[81.3645979495719,84.9532826216891,67.1348644001409,68.0294263135642,55.6257036052644,59.6474729996175,62.0727762944996,64.3266587629914,null,87.368808632344,66.9421205956489,64.6069731738418,78.9707788323984,67.0138400582597,59.2151587817818,63.0334568830207,80.1404976196587,84.9177216347307,59.1097925255075,68.7586630152538,87.6780378019437,70.7806504162028,51.0052206493914,70.1473015699536,71.7178575614467,66.6751675255597,39.0724436428398,66.3746089745313,71.3542124988511,57.1351255921647,87.8044747052714,82.7845475925133,74.7307999098673,43.8569976005703,74.9230660527945,63.9130784735084,71.1785393742844,66.8342592831701,58.6531011974439,80.0447567777708,null,51.8103182820603,97.8925485961139,70.1695381082594,61.7918566746637,95.8372813498601,null,90.3935102934018,57.9765411889181,77.9081362171099,57.3865723665804,67.1826900653541,41.8047404102981,61.1072064092383,78.2723380183801,77.8040636509657,79.0112198248506,80.8622000891715,63.8262069422752,70.0665724216029,61.2468810647726,71.1873264124617,69.2929949391633,65.9140517992899,43.9966705074534],"text":["Name: Jacqueline Mars","Name: John Mars","Name: Bubba Cathy","Name: Dan Cathy","Name: Marijke Mars","Name: Pamela Mars","Name: Valerie Mars","Name: Victoria Mars","Name: Stewart and Lynda Resnick","Name: Pauline MacMillan Keinath","Name: J. Christopher Reyes","Name: Jude Reyes","Name: Harry Stine","Name: Howard Schultz","Name: Bert Beveridge","Name: Tilman Fertitta","Name: Robert Rich, Jr.","Name: Nick Caporella","Name: Gwendolyn Sontheim Meyer","Name: Don Vultaggio & family","Name: Marian Ilitch","Name: Mary Alice Dorrance Malone","Name: Russ Weiner","Name: Austen Cargill, II.","Name: James Cargill, II.","Name: Marianne Liebmann","Name: Lynsi Snyder","Name: John Middleton","Name: Jim Koch","Name: William Wrigley, Jr.","Name: Sheldon Lavin","Name: James Leprino","Name: Bennett Dorrance","Name: Alejandro Santo Domingo","Name: C. Dean Metropoulos","Name: Carol Jenkins Barnett","Name: Rodney Sacks","Name: John Tyson","Name: Joseph Grendys","Name: Clayton Mathile","Name: Andrew & Peggy Cherng","Name: Daniel Lubetzky","Name: David Murdock","Name: Richard Sands","Name: Robert Sands","Name: S. Daniel Abraham","Name: Joe Rogers, Jr.","Name: Peter Buck","Name: Alexandra Daitch","Name: Christopher Goldsbury","Name: Jimmy John Liautaud","Name: Sarah MacMillan","Name: Andres Santo Domingo","Name: Lucy Stitzer","Name: Charlotte Colket Weber","Name: Richard Yuengling, Jr.","Name: Chuck Bundrant","Name: Carl DeSantis","Name: Duke Reyes","Name: Henry Davis","Name: Cargill MacMillan, III.","Name: John MacMillan","Name: Martha MacMillan","Name: William MacMillan","Name: GT Dave"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,186,56,1)"}},"hoveron":"points","name":"Food & Beverage","legendgroup":"Food & Beverage","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[38.2205138931423,4.09692963555455,3.20443863965571,2.93514366688207,2.27347135782242,1.60917810220271],"y":[75.1753161976114,58.0277819259092,79.1025369085371,63.0795504169539,79.0865266559645,89.2292271053418],"text":["Name: Miriam Adelson","Name: Gabe Newell","Name: Steve Wynn","Name: Jon Yarbrough","Name: Elaine Wynn","Name: William Boyd"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,116,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,116,1)"}},"hoveron":"points","name":"Gambling & Casinos","legendgroup":"Gambling & Casinos","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[15.713240768183,10.0665713460371,9.88680643066764,7.4617681539245,6.69906288444996,6.51167099216953,5.20516123101115,4.0629919956997,3.10985008731484,2.98940009962767,2.8749271348305,2.50749479850754,2.36682958807796,2.2808001761511,2.17558749869466,2.22094145769253,1.99746512278914,1.86829641496763,1.76721320126206,1.78173308584839,1.78118534393609,1.6682671318762,1.58413800846785,1.63336103826761,1.50440036598593,1.51274942455813,1.4188307926245,1.26288904175162,1.11329456055537,1.11650241306052,1.11181184342131,1.11634611424059,1.10740758812055,1.06446499353275,0.993760933484882],"y":[81.7459541097283,54.3528538741171,57.7012800212949,67.9925440851599,65.7544832484797,67.3035220462829,86.3245269261301,63.361221008189,64.793801289238,64.6538262689486,49.6358531177044,83.6312642432749,93.6095516858622,74.8008562909439,66.8269184971228,72.8520897038281,50.3499977348372,57.7571032635868,77.1496250627562,52.9964339757338,67.7084150569513,71.7925148481503,71.9726001579315,53.667769054696,76.1089293373749,64.6879623521119,50.6899233091623,null,65.2714476047084,57.3963528292254,null,87.6456783721223,79.7993463069201,61.2619646154344,57.2783027153462],"text":["Name: Thomas Frist, Jr. & family","Name: Li Ge","Name: Carl Cook","Name: Patrick Soon-Shiong","Name: Reinhold Schmieding","Name: Ronda Stryker","Name: John Brown","Name: Jon Stryker","Name: Hao Hong","Name: Pat Stryker","Name: Osman Kibar","Name: Phillip Frost","Name: Alice Schwartz","Name: Stewart Rahr","Name: Randal J. Kirk","Name: Timothy Springer","Name: Amy Wyss","Name: Noubar Afeyan","Name: Robert Duggan","Name: John Oyler","Name: Leonard Schleifer","Name: Gary Michelson","Name: Robert Langer","Name: David Paul","Name: James Leininger","Name: August Troendle","Name: Keith Dunleavy & family","Name: Alan Miller & family","Name: Ming Hsieh","Name: Lou Boliang & family","Name: John Martin","Name: Forrest Preston","Name: Jack Schuler","Name: George Yancopoulos","Name: Yu De-Chao"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,193,159,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,193,159,1)"}},"hoveron":"points","name":"Healthcare","legendgroup":"Healthcare","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.41886037308723,5.72587078016251,3.87639717945829,2.88140637064353,1.52895602395758,1.40745170174167],"y":[86.0311623001471,null,88.9562585705891,64.3063926856965,77.376702172868,81.0472019802779],"text":["Name: Dennis Washington","Name: Fred Smith","Name: Johnelle Hunt","Name: Bradley Jacobs","Name: Jerry Moyes","Name: Jim Thompson"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"Logistics","legendgroup":"Logistics","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[9.79492374483496,8.90920265769586,6.89652848916128,6.22227926192805,5.98836779398844,3.99917803822085,3.73733171593398,3.63867658009753,3.56214597476646,3.60544500568882,3.46311768826097,3.27165099110454,3.1610225539282,2.82771115016192,2.32233892375603,2.18226437043399,2.13124653002247,1.99825319271535,2.03943535434082,1.89071848206222,1.60506674814969,1.50767730826512,1.49490606412292,1.22080882329494,1.17707437742501,1.11974647667259,1.06198131665587,1.02179104052484],"y":[81.7343278136104,70.2742154510692,77.1015366161242,63.6777008283883,78.6140140617266,62.8405296327546,57.0073814656585,66.248827647604,63.8345722654834,62.0332062011585,62.2814212746918,85.7368424911052,92.0069757059216,82.3821065817028,54.268028033711,79.1049429994077,61.3061631055549,65.8648493906483,79.6057051246986,68.6145787775517,75.8206949986517,95.242603055574,64.3371838457882,61.6852760823444,62.7669426230714,79.6324600579217,67.2889986576512,85.2867589315399],"text":["Name: Herbert Kohler, Jr. & family","Name: Steven Rales","Name: Jim Davis & family","Name: Mitchell Rales","Name: Ronald Wanek","Name: Paul Xiaoming Lee & family","Name: Todd Wanek","Name: S. Curtis Johnson","Name: Helen Johnson-Leipold","Name: Winifred J. Marquart","Name: H. Fisk Johnson","Name: Neal Blue & family","Name: Archie Aldis Emmerson & family","Name: Valentin Gapontsev & family","Name: Boris Jordan","Name: Bill Austin","Name: Frank Laukien","Name: Jeffrey Lorberbaum","Name: William Young","Name: Anita Zucker","Name: Catherine Lozick","Name: John Farber","Name: Liu Xiucai & family","Name: Eren Ozmen","Name: Fatih Ozmen","Name: Donald Friese","Name: John McConnell & family","Name: George Pedersen"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,185,227,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,185,227,1)"}},"hoveron":"points","name":"Manufacturing","legendgroup":"Manufacturing","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[59.0366680086777,23.5399400519021,17.5795082558319,9.63414635213092,9.49577200232074,9.40404239257798,9.43711530022323,7.77329252036288,7.36696711178869,6.20605659274384,6.20539783932269,6.18214271204546,6.07622863434255,6.02026178551838,5.10716060396284,4.71233992516995,4.37496535934508,4.23766967408359,3.79451887356117,3.83160351118073,3.709397960715,3.46052448965609,3.53561945876107,3.03574523568153,2.78706826584414,2.69613901721314,2.5879810276255,2.33852506544441,2.28826430160552,1.98831278786063,1.90895391104743,1.90341449292377,1.87559436727315,1.6068811099045,1.50348551547155,1.38441841267049,1.22010001441464,1.01136487804353],"y":[79.0223940907046,89.6273943221197,91.1960427215323,68.1807943485677,78.0451602635905,73.1214498285204,69.6163556981832,80.1364294556901,75.9229406036437,63.7941698675975,75.9437581213191,78.952308919467,94.1258633611724,77.9618991862983,59.7312460042536,49.9473216239363,62.1802589612082,78.9947343558073,43.9294843645766,84.2749582242221,74.0309512278065,85.2092428738251,65.8251143038273,76.0939130356535,58.3398221690208,66.8854587426409,73.3883217191324,38.8326453655958,81.9801322383806,72.0340021662414,87.0701503541321,61.3697212371975,60.0268050720915,66.9262525113299,91.8304943338037,51.3204708542675,49.9717673202977,51.2306434368715],"text":["Name: Michael Bloomberg","Name: Rupert Murdoch & family","Name: Donald Newhouse","Name: Charles Ergen","Name: David Geffen","Name: Jim Kennedy","Name: Blair Parry-Okeden","Name: John Malone","Name: George Lucas","Name: James Chambers","Name: Katharine Rayner","Name: Margaretta Taylor","Name: Charles Dolan & family","Name: Isaac Perlmutter","Name: Reed Hastings","Name: Tim Sweeney","Name: Mark Cuban","Name: Barry Diller","Name: Jeff Green","Name: Amos Hostetter, Jr.","Name: Steven Spielberg","Name: Martha Ingram & family","Name: Thomas Secunda","Name: Haim Saban","Name: David Baszucki","Name: Oprah Winfrey","Name: Charles Zegar","Name: Andrew Paradise","Name: Ted Turner","Name: Kenneth Feld & family","Name: Stanley Hubbard","Name: Brian Roberts","Name: Todd Wagner","Name: Gary Magness","Name: Alan Gerry","Name: Jay-Z","Name: Thomas Tull","Name: Tyler Perry"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,173,250,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,173,250,1)"}},"hoveron":"points","name":"Media & Entertainment","legendgroup":"Media & Entertainment","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.82466661827639,1.73082310615107],"y":[56.3340056961402,70.1584962517023],"text":["Name: Tor Peterson","Name: Robert Friedland"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(97,156,255,1)"}},"hoveron":"points","name":"Metals & Mining","legendgroup":"Metals & Mining","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[15.2880617662333,9.31335868323222,6.98160650644451,6.00514050969854,5.70984372964129,5.5053072751686,5.31092463376001,4.77129612892866,4.52904376536608,4.23714125100523,4.19335901103914,3.91528627658263,3.78732067674398,3.60271276194602,3.50625189015642,3.37074419923127,3.31478273399174,3.11484687939286,3.13027082836255,3.09554278474301,2.96896297406405,3.03051835477352,3.02328408399597,2.9267679814063,2.92733506107703,2.69965025067329,2.66867201374844,2.66789571203291,2.60216658936813,2.46195495806634,2.37274666991085,2.41916706196964,2.31693563908339,2.23600448247045,2.18982481338084,2.00909988174215,1.88149617372081,1.83862835470587,1.6925346439518,1.72757662795484,1.57879518173635,1.49268464421853,1.37078345140442,1.4326228065975,1.31197303200141,1.31071154927835,1.29389998842031,1.20996596397832,0.976394784841687],"y":[87.8990799201652,57.6117895105854,80.1185022551566,80.7909941412508,82.9559470597655,82.3143115695566,79.3539615588263,95.1117189744487,77.6824952973053,62.268836931698,83.04693778418,65.7874610867351,86.742478203401,75.8709591731429,69.0845505464822,72.8312675194815,75.096263397485,64.8380781013519,85.610591426678,80.1963051935658,78.1946009945124,67.3128530280665,74.7600044891238,50.6753103973344,61.2251124702394,81.6757362348959,62.3066493317485,83.3233373753726,63.9229220047593,83.9676373442635,71.0084260299802,74.0279963662848,73.7311876548454,53.0655419036746,82.0078757271171,84.180616103299,74.2610345307738,54.0513304907829,59.2687142189592,70.7657858354971,59.8480160150677,79.0445716895163,55.6332617973909,83.3850287597626,65.6629658978432,55.0580381654203,40.256635183841,79.7846140017733,70.1425767056644],"text":["Name: Donald Bren","Name: Sun Hongbin","Name: Stephen Ross","Name: John A. Sobrato & family","Name: Neil Bluhm","Name: Edward Roski, Jr.","Name: Sam Zell","Name: Ted Lerner & family","Name: Igor Olenicoff","Name: Rick Caruso","Name: Leonard Stern","Name: Jeff Greene","Name: Donald Sterling","Name: Ty Warner","Name: Charles Cohen","Name: Jay Paul","Name: Richard LeFrak & family","Name: Jane Goldman","Name: Herb Simon","Name: Jerry Speyer","Name: Allan Goldman","Name: Amy Goldman Fowler","Name: Diane Kemper","Name: Ben Ashkenazy","Name: Jeff Sutton","Name: Richard Peery","Name: H. Ross Perot, Jr.","Name: Mortimer Zuckerman","Name: Brad Kelley","Name: John Arrillaga","Name: Donald Horton","Name: Donald Trump","Name: Edward DeBartolo, Jr.","Name: Richard Barton","Name: David Walentas","Name: George Argyros & family","Name: Stephen Winn","Name: Glenn Sanford","Name: David Lichtenstein","Name: Jorge Perez","Name: B. Wayne Hughes, Jr.","Name: George Marcus","Name: Lloyd Frink","Name: Martin Selig","Name: John Goff","Name: Penny Sanford","Name: Patrick Zalupski","Name: Robert Toll","Name: Axel Stawski"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(174,135,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(174,135,255,1)"}},"hoveron":"points","name":"Real Estate","legendgroup":"Real Estate","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.71572222935036,5.57812317427248,5.20482710672542,4.29622354593128,4.22013872509822,3.9342821315676,3.88030223436654,3.56695493035018,3.40930800767615,3.31048432657495,3.29310606822371,2.87088666098192,2.89195748565719,2.78691916519776,2.4995701248385,2.01844551563263,1.59337298143655,1.36867386361584,1.0897822654061,0.960557819250971],"y":[71.0165516475216,58.7973251078278,76.039936347492,75.1110934581608,78.9159793235362,66.781064738147,67.0053689159453,59.6367701424286,77.1270057890564,86.8980556219816,58.2216966537759,54.9060009064153,79.6843310698867,61.0291902307421,81.1785440927371,66.9963710429147,61.2043085549027,79.654671125114,70.0804101955146,60.8422773081809],"text":["Name: Micky Arison","Name: Tamara Gustavson","Name: Gary Rollins","Name: Steven Udvar-Hazy","Name: Tom Golisano","Name: Rakesh Gangwal","Name: Robert Rowling","Name: Anthony Pritzker","Name: Jim Davis","Name: B. Wayne Hughes","Name: Jean (Gigi) Pritzker","Name: Maggie Hardy Knox","Name: Glen Taylor","Name: Kenneth Tuchman","Name: Jeremy Jacobs, Sr. & family","Name: Linda Pritzker","Name: Peter Sperling","Name: Darwin Deason","Name: Mitchell Jacobson","Name: David Katzman"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(219,114,251,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(219,114,251,1)"}},"hoveron":"points","name":"Service","legendgroup":"Service","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[8.93799974333495,8.20440350744873,6.91669992523268,6.19324560562149,4.86127810062841,4.13389994349331,3.48756728786975,3.3686163360998,3.40454188641161,3.02594823561609,3.01066228201613,2.77088893786073,2.635125175789,2.18598867310211,2.22531974619254,2.11761075327173,1.79109717482701,1.81468961454928,1.68252344569191,1.63333908533677,1.41494414301589,1.42803036328405,1.16882401851937],"y":[78.0036165287718,72.6045623986051,79.362403264083,78.2844587489963,61.0847790785134,83.7216651655734,70.1252501681447,73.7156655369326,74.3721273580566,61.3178328856826,68.741290628165,70.9284044273198,56.3848001591861,58.739277915284,51.8236987870187,74.6957152225077,76.8709736576304,76.1542709644884,84.7757067184895,58.0906300412491,66.8476822882891,64.7317784368992,64.7804699730128],"text":["Name: Jerry Jones","Name: Stanley Kroenke","Name: Robert Kraft","Name: Arthur Blank","Name: Stephen Bisciotti","Name: Janice McNair","Name: Denise York & family","Name: Gayle Benson","Name: Arturo Moreno","Name: James Irsay","Name: Jeffrey Lurie","Name: John Henry","Name: Dan Snyder","Name: Frank Fertitta, III.","Name: Lorenzo Fertitta","Name: Vincent McMahon","Name: Leslie Alexander","Name: James France","Name: Jerry Reinsdorf","Name: Michael Jordan","Name: Jim Crane","Name: Theodore Leonsis","Name: Joe Lacob"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(245,100,227,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(245,100,227,1)"}},"hoveron":"points","name":"Sports","legendgroup":"Sports","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[177.035446153004,123.966143609472,97.0054244646244,93.0084193609655,91.5375502521358,89.0058810384013,68.6985381169617,53.0090048885904,45.0789226892404,21.3762527373247,18.9833845432103,18.8946994380653,18.3182200666145,17.792127114553,14.9136122124456,13.7182265815698,13.5228450332768,12.5301580145583,12.3822630993463,12.4103374288231,12.3698672666214,12.0659139242768,11.923544181399,11.7667204921693,11.0997850992344,10.0275798439421,9.90843759890646,9.10150535032153,9.09615441551432,8.66645736051723,8.40459134658799,7.06612573726103,6.49905112979934,6.12036844978109,6.00876993266866,5.97215261818841,5.99879262968898,5.83386358303949,5.7029114301689,5.60838574148714,5.53973444610834,5.38545226633549,5.02359985418618,4.91493758495897,4.80982322728261,4.62775952126831,4.48018288822845,4.29534640993923,4.2220409906283,4.1713641201146,4.12065084092319,4.1291407295689,3.91860538316891,3.73656298765913,3.69648121429607,3.62794512890279,3.61890786377713,3.49213273003697,3.49406745621935,3.52477864578366,3.19234541127458,3.18843594925478,3.01044531138614,3.03653127962723,2.99359833933413,2.98240038270131,2.91144642371684,2.91630769038573,2.80735749684274,2.82238128276542,2.76170694831759,2.79531308189034,2.71823155332357,2.67220930457115,2.58677142325789,2.62240275034681,2.6391524926573,2.46127626465634,2.52234019486234,2.51973417157307,2.4149090089649,2.41644093545154,2.31983876595274,2.31319552673027,2.28498177448288,2.32108774416149,2.18235275115818,2.23159751929343,2.22776070334017,2.21895241800696,2.20104536602274,2.11389669915661,2.06788556488231,1.98706728545949,2.02570244718343,1.96278848579153,1.97645847972482,1.8641403956525,1.89093400184065,1.93389871392399,1.92368176594377,1.8800247717835,1.91313356040046,1.83035788269714,1.7609849376604,1.69533269621432,1.73232799429446,1.72155579712242,1.59344119017944,1.63281174607575,1.472207021676,1.53675738139078,1.48856520492584,1.47062517669052,1.49886185668409,1.5096883735992,1.37216396614909,1.42111287962645,1.39258025981486,1.33156141279265,1.2754868490994,1.31359078664333,1.27207106677815,1.31550310064107,1.26805804321542,1.33715744135901,1.23228269353509,1.16205682765692,1.1862019341439,1.22026682110503,1.19383555619046,1.18426229955629,1.13515301870182,1.13715598020703,1.09337520746514,1.11594175642356,1.10863620679826,1.02567798564211,0.991348961498588,0.982569299265742],"y":[57.0878159467131,65.3759406127036,36.2350467512384,76.2388675253838,47.8226864321157,47.090535883233,64.7792707704008,51.149491758272,56.1503397485241,52.8625631816685,57.356564850919,65.8184338839725,43.0481040190905,35.9943619700149,51.0717088146135,39.1073759326711,79.6494938557967,44.0719154162332,36.7480242559686,68.7834946911782,39.2093091228977,91.9100502418354,32.158773675561,null,30.2753694407642,60.8983082689345,45.2349694276229,69.3177688313648,79.1328337939456,52.9935840619728,56.3615915017202,55.1460155569017,77.9155938494951,65.9276718622073,78.78028811533,77.0397752052173,55.7102315168828,64.1174195490778,66.3734138954431,74.8011198721826,79.1315704116598,60.6370767204091,72.3747045170516,67.785500819236,65.3731962032616,56.1080381473526,71.7462748326361,50.843828071095,67.9777554718778,57.9228875244036,86.8613195702434,48.109393427521,38.212455320172,66.3880958521739,69.3048791984096,47.68751642555,47.293675169535,54.8396295599639,55.1679043257609,72.6136102776974,62.3040203673765,72.9268908722326,45.7659863747656,49.6104897497222,49.3252928420901,51.6554288778454,49.9909738080576,39.912251727283,54.8753086285666,77.2994091805071,43.989777226001,35.7841591011733,65.8242511896417,40.6921284124255,48.7410862915218,54.8712811188772,48.8655885115266,58.6114226954058,46.1501955730841,63.6766636006534,54.8825123080984,66.3200417729095,38.1578564479947,57.6226686734706,56.0500977693126,51.6385099334642,66.148265761137,43.0224374959245,70.1460157012567,70.6822447476909,60.0680466176942,53.3845775268972,51.681492561847,28.1572171263397,40.6825320249423,53.1759151564911,28.3755657082424,53.1282043289393,53.8579764805734,null,61.8539031570777,36.7034291099757,74.258839414455,75.9360464476049,38.2430275792256,65.3769690178335,48.8267456466332,50.9466877406463,57.8699289981276,47.2674292584881,62.1619514441118,59.2604481745511,67.828234315291,50.1478337051347,54.8661375932395,42.0147873589769,61.6671736732125,46.7363811571151,60.0091492567211,59.7950766708702,54.8025767039508,66.8785620860755,61.3050277860835,45.8820597585291,47.7021628901362,31.3625871356577,65.2816182266921,59.2884282831103,37.1266539249569,66.0843110369518,64.3223154453561,50.279610962607,41.097562777251,38.6546338533983,58.8226429387927,66.1611447591335,58.7154154693708,42.3796621721238,null,52.6295742811635],"text":["Name: Jeff Bezos","Name: Bill Gates","Name: Mark Zuckerberg","Name: Larry Ellison","Name: Larry Page","Name: Sergey Brin","Name: Steve Ballmer","Name: MacKenzie Scott","Name: Michael Dell","Name: Pierre Omidyar","Name: Laurene Powell Jobs & family","Name: Eric Schmidt","Name: Robert Pera","Name: Dustin Moskovitz","Name: Eric Yuan & family","Name: Brian Chesky","Name: David Duffield","Name: Jack Dorsey","Name: Nathan Blecharczyk","Name: John Doerr","Name: Joe Gebbia","Name: Gordon Moore","Name: Bobby Murphy","Name: Jensen Huang","Name: Evan Spiegel","Name: Jay Chaudhry","Name: Jan Koum","Name: David Sun","Name: John Tu","Name: Lin Bin","Name: Marc Benioff","Name: Anthony Wood","Name: James Goodnight","Name: Henry Samueli","Name: Robert Brockman","Name: Judy Faulkner","Name: Jeff Skoll","Name: Meg Whitman","Name: Michael Moritz","Name: Jack Dangermond","Name: Dagmar Dolby & family","Name: Henry Nicholas, III.","Name: Charles Simonyi","Name: Thomas Siebel","Name: Alan Trefler","Name: Peter Gassner","Name: Min Kao & family","Name: Eric Lefkofsky","Name: Scott Cook","Name: Ken Xie","Name: Margot Birmingham Perot","Name: Matthew Calkins","Name: Ben Silbermann","Name: Jeff Rothschild","Name: David Steward","Name: Steve Conine","Name: Niraj Shah","Name: David Filo","Name: Jim McKelvey","Name: Romesh T. Wadhwani","Name: Thai Lee","Name: John Sall","Name: Ben Chestnut","Name: George Kurtz","Name: Dan Kurzius","Name: Joseph Liemandt","Name: Chad Richison","Name: Paul Sciarra","Name: Aneel Bhusri","Name: James Clark","Name: Travis Kalanick","Name: Tony Xu","Name: Vinod Khosla","Name: Sean Parker","Name: Brian Acton","Name: Steven Sarowitz","Name: Evan Williams","Name: Jim Breyer","Name: Matthew Prince","Name: Kavitark Ram Shriram","Name: Chetan Dube","Name: William Stone","Name: Jared Isaacman","Name: Jim Kavanaugh","Name: Michael Saylor","Name: Jerry Yang","Name: Leo Koguan","Name: Jeff Lawson","Name: Bob Parsons","Name: Phillip T. (Terry) Ragon","Name: Vlad Shmunis","Name: Alexander Karp","Name: Michael Xie","Name: Andy Fang","Name: Orion Hindawi","Name: Reid Hoffman","Name: Stanley Tang","Name: Thierry Cruanes","Name: Benoit Dageville","Name: Alexis Lê-Quôc","Name: Frank Slootman","Name: Kevin Systrom","Name: Patrizio Vinciarelli","Name: David Hindawi","Name: Drew Houston","Name: Patrick Hanrahan","Name: Todd McKinnon","Name: Sheryl Sandberg","Name: Shen Hua & family","Name: David Zalik","Name: Steve Case","Name: Safra Catz","Name: Bharat Desai","Name: John Foley","Name: Mark Pincus","Name: Ryan Smith","Name: John Ocampo","Name: Jonathan Oringer","Name: Jayshree Ullal","Name: Tim Cook","Name: Feng Chenhui","Name: Michael Krasny","Name: Bob Muglia","Name: Jared Smith","Name: Tang Zhuang","Name: Whitney Wolfe Herd","Name: Ronald Clarke","Name: Deng Hui & family","Name: Ryan Graves","Name: Frederic Luddy","Name: James Scapa","Name: Mike Speiser","Name: John Bicket","Name: Sanjit Biswas","Name: Weili Dai","Name: Neerja Sethi","Name: Sehat Sutardja","Name: Bom Kim","Name: Scott Smith","Name: Vlad Vendrow & family"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,97,195,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(255,97,195,1)"}},"hoveron":"points","name":"Technology","legendgroup":"Technology","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.16571983147413,2.01064185330644,1.52253779448569,1.11210975512862],"y":[71.1334226991981,70.9192483482882,72.9921917585656,58.3689605342224],"text":["Name: Rocco Commisso","Name: Craig McCaw","Name: Kenny Troutt","Name: Zhong Peifeng"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,105,156,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(255,105,156,1)"}},"hoveron":"points","name":"Telecom","legendgroup":"Telecom","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":46.1535907015359,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"<b> Billionaires in the U.S. <\/b>","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-7.84318659743667,185.839190569691],"tickmode":"array","ticktext":["0","50","100","150"],"tickvals":[0,50,100,150],"categoryorder":"array","categoryarray":["0","50","100","150"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"<b> NetWorth <\/b>","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[22.3377524369583,102.576541495956],"tickmode":"array","ticktext":["40","60","80","100"],"tickvals":[40,60,80,100],"categoryorder":"array","categoryarray":["40","60","80","100"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"<b> Age <\/b>","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"Industry","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"c4e7a9320d8":{"x":{},"y":{},"label":{},"colour":{},"type":"scatter"}},"cur_data":"c4e7a9320d8","visdat":{"c4e7a9320d8":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="try-to-make-the-map" class="section level6">
+<h6>Try to make the Map</h6>
+<pre class="r"><code>library(maps)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;maps&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     map</code></pre>
+<pre class="r"><code>library(tidyverse)
+state_df &lt;- ggplot2::map_data(&quot;state&quot;)
+
+forbes_billionaires_geo &lt;- read_csv(here(&quot;content/post/2022-04-26-2021-forbes-billionaires/forbes_billionaires_geo.csv&quot;))</code></pre>
+<pre><code>## Rows: 2755 Columns: 13</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (8): Name, Country, Source, Residence, Citizenship, Status, Education, g...
+## dbl (4): NetWorth, Rank, Age, Children
+## lgl (1): Self_made</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>forbes_billionaires_geo %&gt;% select(geometry, everything())</code></pre>
+<pre><code>## # A tibble: 2,755 × 13
+##    geometry   Name    NetWorth Country  Source  Rank   Age Residence Citizenship
+##    &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;      
+##  1 POINT (-1… Jeff B…    177   United … Amazon     1    57 Seattle,… United Sta…
+##  2 POINT (-9… Elon M…    151   United … Tesla…     2    49 Austin, … United Sta…
+##  3 POINT (2.… Bernar…    150   France   LVMH       3    72 Paris, F… France     
+##  4 POINT (-1… Bill G…    124   United … Micro…     4    65 Medina, … United Sta…
+##  5 POINT (-1… Mark Z…     97   United … Faceb…     5    36 Palo Alt… United Sta…
+##  6 POINT (-9… Warren…     96   United … Berks…     6    90 Omaha, N… United Sta…
+##  7 POINT (-1… Larry …     93   United … softw…     7    76 Lanai, H… United Sta…
+##  8 POINT (-1… Larry …     91.5 United … Google     8    48 Palo Alt… United Sta…
+##  9 POINT (-1… Sergey…     89   United … Google     9    47 Los Alto… United Sta…
+## 10 POINT (72… Mukesh…     84.5 India    diver…    10    64 Mumbai, … India      
+## # … with 2,745 more rows, and 4 more variables: Status &lt;chr&gt;, Children &lt;dbl&gt;,
+## #   Education &lt;chr&gt;, Self_made &lt;lgl&gt;</code></pre>
+</div>
+</div>
+</div>

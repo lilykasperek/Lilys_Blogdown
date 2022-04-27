@@ -1,0 +1,2431 @@
+---
+title: Political Donations
+author: R package build
+date: '2022-04-26'
+slug: political-donations
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="examining-the-political-donations-of-american-professional-sports-team-owners" class="section level3">
+<h3>Examining the Political Donations of American Professional Sports Team Owners</h3>
+<div id="what-were-the-highest-25-political-donations-made-by-nfl-team-owners-in-2016-were-the-majority-of-these-donations-affiliated-with-a-certain-party-how-much-influence-could-nfl-team-owners-have-on-elections-is-there-any-gender-that-dominates-these-donations" class="section level6">
+<h6>What were the highest 25 Political Donations made by NFL team owners in 2016? Were the majority of these donations affiliated with a certain party? How much influence could NFL team owners have on elections? Is there any gender that dominates these donations?</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="1056" /></p>
+</div>
+<div id="which-owners-across-all-leagues-have-made-the-most-political-donations-from-this-data-set-how-many-have-they-made-is-there-a-certain-gender-that-dominates" class="section level6">
+<h6>Which owners, across all leagues, have made the most political donations from this data set? How many have they made? Is there a certain gender that dominates?</h6>
+<table class="table table-striped" style="font-size: 12px; font-family: Cambria; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-3">Table 1: </span><span style="font-size:15px"><b>Who Makes the Most Donations Across All Leagues?<b></b></b></span>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Owner
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Team
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+League
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Donations Made
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Charles Johnson
+</td>
+<td style="text-align:left;">
+San Francisco Giants
+</td>
+<td style="text-align:left;">
+MLB
+</td>
+<td style="text-align:right;">
+213
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Micky Arison
+</td>
+<td style="text-align:left;">
+Miami Heat
+</td>
+<td style="text-align:left;">
+NBA
+</td>
+<td style="text-align:right;">
+178
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+John Rogers
+</td>
+<td style="text-align:left;">
+Chicago Sky
+</td>
+<td style="text-align:left;">
+WNBA
+</td>
+<td style="text-align:right;">
+149
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dan DeVos
+</td>
+<td style="text-align:left;">
+Orlando Magic
+</td>
+<td style="text-align:left;">
+NBA
+</td>
+<td style="text-align:right;">
+116
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jody Allen (Paul G. Allen Trust)
+</td>
+<td style="text-align:left;">
+Portland Trail Blazers, Seattle Seahawks
+</td>
+<td style="text-align:left;">
+NBA, NFL
+</td>
+<td style="text-align:right;">
+108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jimmy and Susan Haslam
+</td>
+<td style="text-align:left;">
+Cleveland Browns
+</td>
+<td style="text-align:left;">
+NFL
+</td>
+<td style="text-align:right;">
+102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ken Kendrick
+</td>
+<td style="text-align:left;">
+Arizona Diamondbacks
+</td>
+<td style="text-align:left;">
+MLB
+</td>
+<td style="text-align:right;">
+86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jerry Reinsdorf
+</td>
+<td style="text-align:left;">
+Chicago Bulls, Chicago White Sox
+</td>
+<td style="text-align:left;">
+NBA, MLB
+</td>
+<td style="text-align:right;">
+78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Herbert Simon
+</td>
+<td style="text-align:left;">
+Indiana Pacers, Indiana Fever
+</td>
+<td style="text-align:left;">
+NBA, WNBA
+</td>
+<td style="text-align:right;">
+68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stephen M. Ross
+</td>
+<td style="text-align:left;">
+Miami Dolphins
+</td>
+<td style="text-align:left;">
+NFL
+</td>
+<td style="text-align:right;">
+65
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="how-much-money-was-spent-for-these-donations-do-these-donations-tend-to-be-made-to-the-same-party-for-each-owner-or-do-they-vary-what-is-the-total-sum-of-the-donations-made-by-these-individuals-what-is-the-average-amount-per-donation" class="section level6">
+<h6>How much money was spent for these donations? Do these donations tend to be made to the same party for each owner or do they vary? What is the total sum of the donations made by these individuals? What is the average amount per donation?</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="1056" /></p>
+</div>
+<div id="what-is-the-sum-of-all-of-the-donations-made-by-these-owners" class="section level6">
+<h6>What is the sum of all of the donations made by these owners?</h6>
+<table class="table table-striped" style="font-size: 16px; font-family: Cambria; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-7">Table 2: </span><span style="font-size:15px"><b>Sum of Donations<b></b></b></span>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Charles Johnson
+</td>
+<td style="text-align:right;">
+11035700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dan DeVos
+</td>
+<td style="text-align:right;">
+2310400
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jerry Reinsdorf
+</td>
+<td style="text-align:right;">
+1797300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jimmy and Susan Haslam
+</td>
+<td style="text-align:right;">
+1737200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ken Kendrick
+</td>
+<td style="text-align:right;">
+1379700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Micky Arison
+</td>
+<td style="text-align:right;">
+1193700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+John Rogers
+</td>
+<td style="text-align:right;">
+694350
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stephen M. Ross
+</td>
+<td style="text-align:right;">
+539500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Herbert Simon
+</td>
+<td style="text-align:right;">
+525200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jody Allen (Paul G. Allen Trust)
+</td>
+<td style="text-align:right;">
+419800
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="how-many-donations-out-of-the-213-made-by-charles-johnson-were-made-to-which-political-parties" class="section level6">
+<h6>How many donations, out of the 213 made by Charles Johnson, were made to which political parties?</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="1056" /></p>
+<table class="table table-striped" style="font-size: 13px; font-family: Cambria; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-11">Table 3: </span>Count of Donations by Party
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Party
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+207
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bipartisan, but mostly Republican
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Democrat
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="as-we-can-see-most-of-the-donations-made-by-charles-johnson-were-affiliated-with-the-republican-party.-what-were-these-organizations-and-how-many-donations-did-charles-johnson-make-to-each-of-these-organizations" class="section level6">
+<h6>As we can see, most of the donations made by Charles Johnson were affiliated with the Republican party. What were these organizations and how many donations did Charles Johnson make to each of these organizations?</h6>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table table-striped" style="font-size: 16px; font-family: Cambria; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-13">Table 4: </span><span style="font-size:15px"><b>What Are Some Organizations Charles Johnson Donates To?<b></b></b></span>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
+Recipient
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
+Political Party
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
+Amount of Donations Made
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CONGRESSIONAL LEADERSHIP FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MOONEY VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SENATE LEADERSHIP FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TRUMP VICTORY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VIGOP (VIRGIN ISLANDS REPUBLICAN PARTY)
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ALEX MOONEY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHIP ROY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CORNYN MAJORITY COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FASO FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HURD FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INVESTMENT COMPANY INSTITUTE POLITICAL ACTION COMMITTEE
+</td>
+<td style="text-align:left;">
+Bipartisan, but mostly Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JACKIE SPEIER FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Democrat
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KATKO FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MAST VICTORY COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MCSALLY FOR SENATE INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESTORATION PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TEAM RYAN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TRUE NORTH PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WALTERS FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ZELDIN FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1820 PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ALASKANS FOR DAN SULLIVAN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AMANDA MAKKI FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANDREWS FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANDY BARR FOR CONGRESS, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANNA PAULINA LUNA FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ASHLEY HINSON FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BLACK AMERICA’S POLITICAL ACTION COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BLACK AMERICANS TO RE-ELECT THE PRESIDENT
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BLUM FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BOB HUGIN FOR SENATE INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BOLDUC 2020, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BRIAN FITZPATRICK FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BURR NC VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CALIFORNIA REPUBLICAN PARTY FEDERAL ACCT.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CAMPBELL 4 MARYLAND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CARLA SPALDING FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CARLOS CURBELO CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CARLY FOR PRESIDENT
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CARMELITA FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CAROL FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CARSON AMERICA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHURCH FOR WISCONSIN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CLAUDIA TENNEY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+COFFMAN FOR CONGRESS 2016
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+COLLINS FOR SENATOR
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+COMMITTEE TO ELECT DARRYL GLENN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+COMSTOCK FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+COTTON VICTORY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CRAMER FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CRESENT HARDY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CUMMINGS FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DARRELL ISSA FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DIRIGO PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DOLD FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DON BACON FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DOUG LAMALFA COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DUNCAN D. HUNTER FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ELBERT GUILLORY FOR AMERICA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ELISE FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FIGHTING FOR FLORIDA FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FIGHTING FOR OHIO FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FISCHBACH FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FLORIDA VOTES COUNT
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF DAVE BRAT INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF FRANK GUINTA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF HAGEDORN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF JOE HECK
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF JOHN MCCAIN INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF LEON BENJAMIN, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF MATT GAETZ
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF MIA LOVE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF MIA LOVE PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FRIENDS OF PAT TOOMEY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GARDNER VICTORY COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GERSON FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GRASSLEY HAWKEYE FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GREAT AMERICA PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GREG FOR MONTANA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HANDEL FOR CONGRESS, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HELLER FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HISPANIC VICTORY PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HOEVEN FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HOOSIERS FOR ROKITA, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HOUSLEY FOR SENATE COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HUIZENGA FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HUNT FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HURD VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INTEGRITY NJ
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INVEST IN A STRONG AND SECURE AMERICA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INVESTMENT COMPANY INSTITUTE POLITICAL ACTION COMMITTEE (ICI PAC)
+</td>
+<td style="text-align:left;">
+Bipartisan, but mostly Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ISSA FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAIME FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JASON LEWIS FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JEB 2016, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JEFF DOVE FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JOE COLLINS FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JOHN CARTER FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JOHN JAMES FOR SENATE INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JOHN JAMES FOR SENATE, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JOHN KENNEDY FOR US
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JUDD MATHENY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KIM KLACIK FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KIRK FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KISTNER FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LINDSEY GRAHAM 2016
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LIPETRI FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LISA SONG SUTTON FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MAKING INVESTMENTS MAJORITY INSURED PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MARCO RUBIO FOR SENATE 2016
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MARIO DIAZ-BALART FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MARK GREEN FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MARSHA FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MAST FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MATT ROSENDALE FOR MONTANA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MCCAUL FOR CONGRESS, INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MCCONNELL VICTORY COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MCGUIRE FOR VIRGINIA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MCSALLY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MIKE BRAUN FOR INDIANA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MIKE GALLAGHER FOR WISCONSIN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MIKE GARCIA FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MIMI WALTERS VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MISSOURI RISING ACTION
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MORRISEY FOR SENATE INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NANCY MACE FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NEW REPUBLICAN PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NICOLE FOR NEW YORK
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRCC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRSC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRSC TARGETED STATE VICTORY COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OLSON FOR CONGRESS COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PATRICK MOONEY FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PATRIOTS FOR PERRY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PAUL CHABOT CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PERDUE FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PERDUE VICTORY INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+POLIQUIN FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PORTMAN FOR SENATE COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PROTECT THE HOUSE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RENACCI FOR OHIO VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RENACCI FOR US SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+REPUBLICAN NATIONAL COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RICK FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RIGHT TO RISE USA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ROHRABACHER FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RON DESANTIS FOR FLORIDA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RON JOHNSON FOR SENATE INC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ROSS SPANO FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ROTHFUS VICTORY COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RUSS FULCHER FOR IDAHO
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SALAZAR FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SANDY SMITH FOR CONGRESS, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SCALISE LEADERSHIP FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SCOTT STURGILL FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SEAL PAC SUPPORTING ELECTING AMERICAN LEADERS PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SEAN JACKSON FOR CONGRESS COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SENATE CONSERVATIVES ACTION
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SENATE CONSERVATIVES FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SLOCUM FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SPECIAL OPERATIONS FOR AMERICA
+</td>
+<td style="text-align:left;">
+Bipartisan, but mostly Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STARS AND STRIPES FOREVER PAC
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STEIL VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STEVE CHABOT FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STEVE DAINES FOR MONTANA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STUTZMAN FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TAKE BACK THE HOUSE 2020
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TARKANIAN FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TEAM GRAHAM, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TEAM HAGERTY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TEAM PORTMAN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TED BUDD FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TEXANS FOR A CONSERVATIVE MAJORITY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+THE 2016 COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+THOMAS MASSIE FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TIM SCOTT FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOM CAMPBELL FOR NORTH DAKOTA
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TOOMEY PENNSYLVANIA VICTORY FUND
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TRUMP MAKE AMERICA GREAT AGAIN COMMITTEE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UPTON FOR ALL OF US
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAH REPUBLICAN PARTY
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VALADAO FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VAN TAYLOR CAMPAIGN
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VICTORY 2016
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WE THE PEOPLE, NOT WASHINGTON
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WICKER FOR SENATE
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+YOUNG FOR IOWA, INC.
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ZINKE FOR CONGRESS
+</td>
+<td style="text-align:left;">
+Republican
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="what-are-some-organizations-that-seem-to-be-recieving-the-most-donations-across-all-owners-and-leagues-what-political-party-are-these-organizations-affiliated-with" class="section level6">
+<h6>What are some organizations that seem to be recieving the most donations across all owners and leagues? What political party are these organizations affiliated with?</h6>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="1056" /></p>
+</div>
+</div>
