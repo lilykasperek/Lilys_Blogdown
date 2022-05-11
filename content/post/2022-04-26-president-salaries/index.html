@@ -1,7 +1,7 @@
 ---
 title: President Salaries
-author: R package build
-date: '2022-04-26'
+date: '2022-05-12'
+weight: 4
 slug: president-salaries
 categories: []
 tags: []
@@ -10,3 +10,115 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<div id="president-salary" class="section level1">
+<h1>President Salary</h1>
+<div id="if-i-would-have-had-more-time-i-would-have-made-visualizations-using-a-data-set-detailing-president-and-vice-president-salary." class="section level2">
+<h2>If I would have had more time, I would have made visualizations using a data set detailing president and vice president salary.</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
+## ✓ readr   2.0.1     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>## here() starts at /Users/lilykasperek/Desktop/Lilys_Blogdown</code></pre>
+<pre class="r"><code>pvp_dataset &lt;- read_csv(here(&quot;data/pvp_dataset.csv&quot;))</code></pre>
+<pre><code>## Rows: 429 Columns: 6</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (4): name, party, term, position_title
+## dbl (2): year, salary</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>pvp_dataset</code></pre>
+<pre><code>## # A tibble: 429 × 6
+##     year name              party        term   salary position_title            
+##    &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;                     
+##  1  1789 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  2  1790 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  3  1791 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  4  1792 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  5  1793 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  6  1794 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  7  1795 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  8  1796 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  9  1797 Adams,John        Federalist   First   25000 PRESIDENT OF THE UNITED S…
+## 10  1798 Adams,John        Federalist   First   25000 PRESIDENT OF THE UNITED S…
+## # … with 419 more rows</code></pre>
+<pre class="r"><code>pres_salary &lt;- pvp_dataset %&gt;% filter(position_title == &quot;PRESIDENT OF THE UNITED STATES&quot;)
+pres_salary</code></pre>
+<pre><code>## # A tibble: 232 × 6
+##     year name              party        term   salary position_title            
+##    &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;                     
+##  1  1789 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  2  1790 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  3  1791 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  4  1792 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  5  1793 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  6  1794 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  7  1795 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  8  1796 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  9  1797 Adams,John        Federalist   First   25000 PRESIDENT OF THE UNITED S…
+## 10  1798 Adams,John        Federalist   First   25000 PRESIDENT OF THE UNITED S…
+## # … with 222 more rows</code></pre>
+<pre class="r"><code>ggplot(data = pres_salary, aes(x = salary, y = year)) +
+  geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>icons &lt;- pres_salary %&gt;% filter(name == &quot;Washington,George&quot; |
+                                  name == &quot;Lincoln,Abraham&quot; |
+                         name == &quot;Roosevelt,Franklin Delano&quot; |
+                         name == &quot;Nixon,Richard Milhous&quot; |
+                         name == &quot;Bush,George Walker&quot; |
+                         name == &quot;Obama,Barack Hussein,II&quot; |
+                         name == &quot;Trump,Donald John&quot;)
+icons</code></pre>
+<pre><code>## # A tibble: 50 × 6
+##     year name              party        term   salary position_title            
+##    &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;                     
+##  1  1789 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  2  1790 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  3  1791 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  4  1792 Washington,George Unaffiliated First   25000 PRESIDENT OF THE UNITED S…
+##  5  1793 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  6  1794 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  7  1795 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  8  1796 Washington,George Unaffiliated Second  25000 PRESIDENT OF THE UNITED S…
+##  9  1861 Lincoln,Abraham   Republican   First   25000 PRESIDENT OF THE UNITED S…
+## 10  1862 Lincoln,Abraham   Republican   First   25000 PRESIDENT OF THE UNITED S…
+## # … with 40 more rows</code></pre>
+<pre class="r"><code>ggplot(data = icons, aes(x = name, y = salary)) +
+  geom_col() +
+  coord_flip()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = pres_salary, aes(x = year, y = salary)) +
+  geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = pres_salary, aes(x = year, y = salary, colour = salary)) +
+  geom_line() </code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
+<pre class="r"><code>pres_salary %&gt;% group_by(party) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 7 × 2
+##   party                     n
+##   &lt;chr&gt;                 &lt;int&gt;
+## 1 Republican               93
+## 2 Democratic               88
+## 3 Democratic-Republican    28
+## 4 Whig                      9
+## 5 Unaffiliated              8
+## 6 Federalist                4
+## 7 National Union            2</code></pre>
+<pre class="r"><code>ggplot(data = pres_salary, aes(x = salary, y = party)) +
+  geom_point()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-5.png" width="672" /></p>
+</div>
+</div>
+<div id="find-the-data" class="section level1">
+<h1>Find the Data</h1>
+<p><a href="https://www.kaggle.com/adiquant">Adiquant on Kaggle</a></p>
+</div>

@@ -21,3 +21,8 @@ library(ggplot2)
 ggplot(diamonds, aes(x=carat, y=price, color=clarity)) + geom_point()
 ```
 
+```{r}
+blogdown::build_site()
+blogdown::serve_site()
+```
+

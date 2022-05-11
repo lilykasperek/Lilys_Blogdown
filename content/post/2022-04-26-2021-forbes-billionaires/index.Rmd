@@ -1,25 +1,84 @@
 ---
-title: '2021 Forbes Billionaires '
-author: R package build
-date: '2022-04-26'
+title: '2021 Forbes Billionaires'
+date: '2022-05-12'
+weight: 3
 slug: 2021-forbes-billionaires
 categories: []
 tags: []
 ---
 
-# Forbes Billionaires 2021
-#### This data set is from 2021. The Forbes 2022 Billionaire List differs. 22
+## Examining the Public Data of 2021 Forbes Billionaires
 
-###### Who were the billionaires with the top 10 highest net worths on the 2021 Forbes Billionaires List? How much are their net worths? What industry do they work in? Does any industry dominate the others? 
+#### For my second post, I decided to visualize the data of the 2021 Forbes Billionaires. By looking at this data, we can find out more about economic trends domestically and internationally. For instance, we can find out about lucrative industries and the number of billionaires in different countries. Each visualization is accompanied by some relevant questions and possible answers to those questions.
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
+library(knitr)
 library(tidyverse)
 library(here)
 library(ggrepel)
-billionaires <- read_csv(here("content/post/2022-04-26-2021-forbes-billionaires/Billionaire.csv"))
+library(kableExtra)
+library(plotly)
+
+billionaires <- read_csv(here("data/Billionaires.csv"))
 billionaires
-forbes_billionaires <- read_csv(here("content/post/2022-04-26-2021-forbes-billionaires/forbes_billionaires.csv"))
+
+forbes_billionaires <- read_csv(here("data/forbes__billionaires.csv"))
 forbes_billionaires 
 
+combined_billionaires <- left_join(forbes_billionaires, billionaires, by = c("Name" = "Name"))
+
+usafb_df <- forbes_billionaires %>% filter(Country == "United States")
+usafb_df <- usafb_df %>% select(Name, NetWorth, Source, Residence)
+
+t <- list(
+  family = "mono",
+  color = toRGB("grey50"))
+
+plotlyviz <- combined_billionaires %>% select(Name, NetWorth.x, Country.x, Source.x, Age.x, Industry) %>%
+  rename(NetWorth = 'NetWorth.x', 
+         Country = 'Country.x',
+         Source = 'Source.x',
+         Age = 'Age.x')
+```
+
+## Starting Out: Looking at all Billionaires 
+
+#### Before looking at some more specific questions, I just wanted to provide an interactive graph looking at the different billionaires on the list. The net worth, age, name, and industry of the billionaires is labeled on each point. Each point is colored by industry as well. 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+plot10 <- ggplot(data = plotlyviz, aes(values = Name, 
+                                       x = NetWorth, y = Age, colour = Industry)) +
+  geom_jitter() +
+  coord_flip() +
+  labs(x = "NetWorth",
+       y = "Age",
+       title = "2021 Forbes Billionaires") +
+  theme(plot.title = element_text(face = "bold",
+                                  size = 15,
+                                  margin = margin(c(t = 10, b = 10))),
+        axis.ticks = element_blank(),
+        legend.title = element_text(face = "bold"),
+        axis.title = element_text(face = "bold"))
+
+ggplotly(plot10, fixed_thead = T)
+```
+
+## Individual Billionaires 
+
+#### Who were the billionaires with the top 10 highest net worths on the 2021 Forbes Billionaires List? How much are some of their net worths? What industry do they work in? Does any industry dominate the others? 
+
+```{r, message = FALSE, echo = FALSE, results = 'hide', warning = FALSE}
+library(plotly)
+
+us_forbes_billionaires <- combined_billionaires %>% filter(Country.x == "United States")
+us_forbes_billionaires %>% select()
+
+us_forbes_billionaires %>% group_by(Industry) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 top10 <- billionaires %>% filter(Rank <= 10) %>%
   mutate(NetWorth = parse_number(NetWorth)) %>%
   mutate(order = fct_reorder(.f = Name, .x = NetWorth)) %>%
@@ -35,7 +94,7 @@ new_names2 <- c("Mukesh Ambani", "Sergey Brin", "Larry Page", "Larry Ellison",
                 "Bernard Arnault & Family", "Elon Musk", "Jeff Bezos")
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
 ggplot(data = top10, aes(x = order, y = NetWorth, fill = Industry)) +
   geom_col(colour = "black") +
   coord_flip() +
@@ -45,7 +104,7 @@ ggplot(data = top10, aes(x = order, y = NetWorth, fill = Industry)) +
        colour = "Industry",
        title = "2021 Forbes Billionaires",
        subtitle = "Examining the Highest Net Worths from 2021") +
-  scale_fill_viridis_d() +
+   scale_fill_brewer(palette = "Dark2")  +
   scale_x_discrete(labels = new_names2) +
   theme(legend.position = c(0.835, 0.19)) +
   theme(axis.title = element_text(family = "mono",
@@ -80,12 +139,17 @@ ggplot(data = top10, aes(x = order, y = NetWorth, fill = Industry)) +
                                    size = 6),
         plot.caption = element_text(family = "mono",
                                     face = "italic",
-                                    vjust = 5,
+                                    vjust = 8,
                                     hjust = 0.5,
                                     margin = margin(c(t = 30,
                                                       b = 30)),
                                     size = 10),
-             plot.margin = margin(1, 1, 0.5, 0.2, "cm"),
+             plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
@@ -95,43 +159,49 @@ ggplot(data = top10, aes(x = order, y = NetWorth, fill = Industry)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-###### How many billionaires are there from the top 30 countries on the list? Do developed democracies have the most billionaires on the list?
-```{r}
+#### Some of the top billionaires from 2021 are not surprising. Jeff Bezos, Elon Musk, Bill Gates, Mark Zuckerberg, and Warren Buffet are all household names for their wealth. This visualization shows us that in 2021 Jeff Bezos, Elon Musk, and the collective net worth of Bernard Arnault and his family exceeded 150 billion dollars. The net worths of the other billionaires as of 2021 are just as impressive. Bill Gates's net worth was 124 billion dollars. The rest of the billionaires on the list have net worths of 90 billion dollars or higher. The last two billionaires have net worths of just under 90 billion dollars. It seems that many of the billionaires on the list are in the Technology industry. Only Elon Musk is in the automotive industry. Similarly, only the Arnault family and Warren Buffet are the billionaires in their respective industries, fashion, and finance. Lastly, only Mukesh Ambani is reported to have a net worth based on diversification. 
+
+## Billionaires by Country
+
+#### Which countries have the most billionaires on the 2021 Forbes Billionaires List? Do countries considered "developed democracies" have the most billionaires on the list? 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 country <- forbes_billionaires %>% group_by(Country) %>%
   summarise(n = n()) %>%
   arrange(desc(n)) 
+country
 
 country_30 <- country %>% slice(1:30) %>%
   mutate(order = fct_reorder(.f = Country, .x = n))
 country_30
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
 ggplot(data = country_30, aes(x = order, y = n, fill = n)) +
-   geom_col(colour = "black") +
+   geom_point(colour = "orange") +
+  geom_segment(aes(x = order, xend = order, y = 0, yend = n), colour = "blue", linetype = "dotdash") +
    coord_flip() +
    labs(x = " ", 
         y = " ",
-        title = "How Many Billionaires Are There From the",
-        subtitle = "30 Countries with the Most Billionaires",
+        title = "The 30 Countries with the Most Billionaires",
         fill = "Count") +
    theme(plot.title = element_text(family = "mono",
                                    face = "bold",
                                    size = 15,
-                                    margin = margin(c(t = 40,
-                                                     b = 50)),
+                                    margin = margin(c(t = 10,
+                                                     b = 10)),
                                    hjust = 0.5,
-                                   vjust = 8),
-         plot.subtitle = element_text(family = "mono",
-                                      face = "bold",
-                                      size = 14,
-                                      hjust = 0.5,
-                                      vjust = 5),
+                                   vjust = 5),
          plot.background = element_rect(
       fill = "grey90",
       colour = "black",
       size = 3),
-      plot.margin = margin(1, 1, 1, 0.5, unit = 'cm'),
+       panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
+      plot.margin = margin(1, 0.5, 0.5, 0.5, unit = 'cm'),
          axis.text = element_text(family = "mono",
                                   face = "bold",
                                   size = 6.5),
@@ -140,11 +210,34 @@ ggplot(data = country_30, aes(x = order, y = n, fill = n)) +
          legend.text = element_text(family = "mono"),
          axis.ticks = element_blank(),
          legend.position = "none") +
-   scale_fill_viridis_b(n.breaks = 6) +
-   geom_text(aes(label = n, fontface = "bold", family = "mono"), hjust = -0.2, size = 2.5, colour = "black")
+   geom_text(aes(label = n, fontface = "bold", family = "mono"), hjust = -0.2, size = 2.7, colour = "black")
 ```
 
-###### What is the average age of the billionaires from the 10 countries with the most billionaires? Is there a pattern or do the averages widely differ? Are there any interesting outliers? 
+#### The majority of the billionaires on the list are from the United States and China, with 724 and 626 billionaires respectively in 2021. Over 100 billionaires are reported to be from India, Germany, and Russia as well. The rest of the countries have anywhere from 10 to 71 reported billionaires. Some countries on the list that have been considered "developed democracies" include the United States, Germany, Brazil, Canada, the United Kingdom, Italy, Japan, Taiwan, Australia, South Korea, France, Sweden, Switzerland, Spain, Israel, Mexico, Norway, the Netherlands, Austria, and Denmark. It seems many of the countries are typically regarded as "developed democracies". "Developed democracies" typically have some sort of capitalistic economic system, and encourage freedom over equality, so it makes sense some of these countries would have a great number of billionaires. 
+
+#### What about the remaining countries featured on the list? 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
+remaining_countries <- country %>% slice(31:70) %>%
+  mutate(order = fct_reorder(.f = Country, .x = n)) %>%
+  select(Country, n)
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+kable(remaining_countries, caption = "<span style='font-size:20px'><b>What Are The Remaining Countries on the List?<b></span>", 
+      col.names = c("Name", "Amount"),
+      digits = 1) %>%
+      kable_paper("hover") %>%
+  kable_styling(html_font = "Cambria",
+                font_size = 16,
+                fixed_thead = T,
+                full_width = T) %>%
+  scroll_box(height = "250px")
+```
+
+#### The 2021 Forbes Billionaires list reports 9 or fewer billionaires from the remaining countries. Some countries on this list considered "developed democracies" include Chile, Czechia (the Czech Republic), Ireland, Poland, Finland, Argentina, Cyprus, Greece, Belgium, Hungary, New Zealand, Portugal, Romania, and Slovakia. Many of the countries on this list, however, are not considered "developed democracies". 
+
+#### What is the average age of the billionaires from the 10 countries with the most billionaires? Do these averages widely differ? It should be noted that the age of certain billionaires was unavailable in the data and thus not all observed billionaires are represented in this visualization or the calculation for the average age of billionaires in each country. Without age, these observations are not applicable to the posed questions. 
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 forbes_billionaires_age <- forbes_billionaires %>%
@@ -161,12 +254,10 @@ countries_10 <- forbes_billionaires_age %>% filter(Country == "United States" |
            Country == "Brazil" |
            Country == "Canada" |
            Country == "United Kingdom" |
-           Country == "Italy") 
+           Country == "Italy") %>%
+  select(Name, Country, age) %>% 
+  filter(!is.na(age))
 countries_10
-
-ggplot(data = countries_10, aes(x = Country, y = age)) +
-  geom_point() +
-  coord_flip() 
 
 countries_10_no_missing_values <- countries_10 %>% filter(!is.na(age))
 countries_10_no_missing_values
@@ -174,7 +265,7 @@ countries_10_no_missing_values
 outliers_age <- countries_10_no_missing_values %>% filter(age < 25 | age > 97)
 outliers_age
 
-countries_10_average_age <- countries_10_no_missing_values %>% group_by(Country) %>%
+countries_10_average_age <- countries_10 %>% group_by(Country) %>%
   summarise(Average = mean(age)) %>%
   arrange(desc(Average)) %>% 
   mutate(order = fct_reorder(.f = Country, .x = Average)) %>%
@@ -194,10 +285,8 @@ level_order3 <- factor(countries_10$Country, level = c('China',
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-## In order of highest to lowest age 
-
 ggplot(data = countries_10, aes(x = level_order3, y = age)) +
-  geom_point(alpha = 0.7) +
+  geom_point(alpha = 0.4) +
   coord_flip() +
   geom_point(data = countries_10_average_age, aes(x = Country, y = age, colour = "Mean Age of Billionaires"),
              size = 2) +
@@ -226,6 +315,11 @@ ggplot(data = countries_10, aes(x = level_order3, y = age)) +
                                     face = "italic"),
         legend.key.size = unit(0.3, 'cm'),
              plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
@@ -234,92 +328,25 @@ ggplot(data = countries_10, aes(x = level_order3, y = age)) +
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE}
-
-## Outliers labeled 
-
-ggplot(data = countries_10, aes(x = Country, y = age)) +
-  geom_point(alpha = 0.4, size = 1.5) +
-  coord_flip() +
-  geom_point(data = countries_10_average_age, aes(x = order, y = age, colour = "Mean Age of Billionaires"),
-             size = 2.5) +
-  scale_colour_manual(values = c("Mean Age of Billionaires" = "red")) +
-  labs(x = " ", 
-       y = " ",
-       title = "Average Age of Billionaires by Country") +
-  theme(legend.position = "bottom") +
-  theme(axis.title = element_text(family = "mono",
-                                  face = "bold"),
-        axis.text = element_text(family = "mono",
-                                 face = "bold",
-                                 size = 6),
-        plot.title = element_text(family = "mono",
-                                  face = "bold",
-                                  size = 13,
-                                  margin = margin(c(t = 50,
-                                                    b = 50)),
-                                  hjust = 0.5,
-                                  vjust = 10),
-        axis.ticks = element_blank(),
-        legend.title = element_blank(),
-             plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
-        plot.background = element_rect(
-    fill = "grey90",
-    colour = "black",
-    size = 3),
-        legend.text = element_text(family = "mono",
-                                   face = "italic"), 
-    legend.key.size = unit(0.3, 'cm'),
-    legend.box.background = element_rect(size = 1.5),
-        plot.caption = element_text(family = "mono",
-                                    size = 9,
-                                    face = "italic")) +
-  theme(legend.position = "bottom") +
-    geom_label_repel(data = outliers_age, aes(label = age))
-```
-
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
-
-## averages labeled 
-
-  ggplot(data = countries_10, aes(x = Country, y = age)) +
-  geom_point(alpha = 0.7) +
-  coord_flip() +
-  geom_point(data = countries_10_average_age, aes(x = Country, y = age, colour = "Mean Age of Billionaires"),
-             size = 2) +
-  scale_colour_manual(values = c("Mean Age of Billionaires" = "red")) +
-  labs(x = " ", 
-       y = " ",
-       title = "Average Age of Billionaires by Country") +
-  theme(legend.position = "bottom") +
-  theme(axis.title = element_text(family = "mono",
-                                  face = "bold"),
-        axis.text = element_text(family = "mono"),
-        axis.text.y = element_text(face = "bold"),
-        axis.text.x = element_text(face = "bold"),
-        plot.title = element_text(family = "mono",
-                                  face = "bold",
-                                  size = 18,
-                                  margin = margin(c(t = 50,
-                                                    b = 50)),
-                                  vjust = 10),
-        axis.ticks = element_blank(),
-        legend.title = element_blank(),
-        legend.text = element_text(family = "mono",
-                                   face = "bold"), 
-        plot.caption = element_text(family = "mono",
-                                    size = 9,
-                                    face = "italic"),
-        legend.key.size = unit(1.2, 'cm'),
-             plot.margin = margin(1, 1, 1, 1, "cm"),
-        plot.background = element_rect(
-    fill = "grey90",
-    colour = "black",
-    size = 3),
-  legend.box.background = element_rect()) +
-  geom_text(data = countries_10_average_age, aes(label = age))
+library(knitr)
+kable_strat <- countries_10_average_age %>% select(order, age) %>%
+  rename(Country = 'order', Age = 'age')
 ```
 
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+kable(kable_strat, caption = "<span style='font-size:20px'><b>What is the Average Age of Billionaires?<b></span>", 
+      col.names = c("Country", "Age"),
+      digits = 1) %>%
+  kable_paper("hover") %>%
+  kable_styling(html_font = "Cambria",
+                font_size = 17,
+                fixed_thead = T,
+                full_width = T) %>%
+  scroll_box(height = "250px")
+```
+
+#### It seems that the average age of billionaires across these countries is similar. The average age has around a 13-year range, with the average age of billionaires in Italy at 69 years old and the average age of billionaires in China at 56.3 years old. The average ages of billionaires in the United Kingdom and the United States are very similar, at around 66 years of age. We can see some outliers on the visualization that may account for the differing ages. For instance, in Germany, there is one observed billionaire who is younger than 20 years old, and in China, there is an observed billionaire who is just younger than 25 years old. Again, we should keep in mind that not all billionaires are accounted for. 
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 usa_df <- billionaires %>% filter(Country == "United States") %>% mutate(networth = parse_number(NetWorth)) 
@@ -343,12 +370,15 @@ above_or_below_us <- usa_df %>% mutate(avg = mean(networth)) %>%
 above_or_below_us 
 ```
 
-###### How many Billionaires in the Fashion Industry fall above and below the average net worth of American 
+## Billionaires by Industry 
+
+#### How many American Billionaires in the Fashion Industry fall above or below the average net worth of American Billionaires? The average net worth of American Billionaires on the 2021 Forbes Billionaires List is 6.08 billion dollars. 
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 11}
 ggplot(data = above_or_below_us, aes(x = order, y = networth, colour = above_avg)) +
   geom_segment(aes(x = order, xend = order, y = avg, yend = networth)) +
   geom_point() +
-  scale_colour_brewer(palette = "Accent") +
+   scale_colour_brewer(palette = "Dark2")  +
   coord_flip() +
   labs(x = " ",
       y = "Net Worth",
@@ -386,6 +416,11 @@ ggplot(data = above_or_below_us, aes(x = order, y = networth, colour = above_avg
                                     margin = margin(c(t = 10, b = 10)),
                                     size = 8),
              plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"), 
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
@@ -394,155 +429,136 @@ ggplot(data = above_or_below_us, aes(x = order, y = networth, colour = above_avg
                                    size = 5),
         axis.ticks = element_blank(),
         legend.box.background = element_rect(size = 1.5),
-        legend.position = c(0.85, 0.15),
-         legend.key.width = unit(0.5, 'cm'),
-        legend.key.height = unit(0.5, 'cm'))
+        legend.position = c(0.85, 0.1),
+         legend.key.width = unit(1, 'cm'),
+        legend.key.height = unit(1, 'cm'))
 ```
 
-###### Put kable table with all the billionaires before this
-###### Myabe change table from How many Billionaires are self-made to how many are self-made by industry 
-```{r}
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 forbes_billionaires %>% select(Self_made, everything())
 self_made <- forbes_billionaires %>% group_by(Self_made) %>%
   summarise(n = n()) %>%
   filter(!is.na(Self_made)) 
+```
 
-ggplot(data = self_made, aes(x = Self_made, y = n, fill = Self_made)) +
-  geom_col(colour = "black") +
-  scale_fill_brewer(palette = "Spectral") +
+#### It seems that only a small portion of American billionaires in the fashion industry exceed a net worth of 6.08 billion dollars. For instance, Alice, Jim, and Rob Walton have individual net worths of around 60 billion dollars. Most of the other billionaires have net worths ranging from 6 to 50 billion dollars. Some interesting names that fall below the average net worth of American billionaires on the 2021 Forbes Billionaires List include Kanye West and Kim Kardashian, with net worths of 1.8 and 1 billion dollars. 
+
+#### What are some of the top industries on the 2021 Forbes Billionaires List? 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
+industry <- combined_billionaires %>% group_by(Industry) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n)) %>%
+  mutate(industry_ordered = fct_reorder(.f = Industry, .x = n))
+
+industry2 <- industry %>% slice(1:9)
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(data = industry, aes(x = industry_ordered, y = n, fill = industry_ordered)) +
+  geom_point(colour = "orange") +
+  geom_segment(aes(x = industry_ordered, xend = industry_ordered, y = n, yend = 0), colour = "blue", linetype = "dotdash") +
+  coord_flip() +
   labs(x = " ",
        y = " ",
-       title = "How Many Forbes Billionaires Are Self-Made?",
-       fill = " ") +
-  theme(plot.title = element_text(family = "mono",
-                                  face = "bold",
-                                  margin = margin(c(t = 30)),
-                                  hjust = 0.5,
-                                  vjust = 8,
-                                  size = 15),
-        legend.text = element_text(family = "mono"),
-        axis.text = element_text(family = "mono"),
-        axis.text.x = element_text(size = 15,
-                                   face = "bold"),
+       title = "Top Industries of 2021 Forbes Billionaires")  +
+  theme(axis.text = element_text(family = "mono",
+                                 face = "bold",
+                                 size = 9),
         axis.ticks = element_blank(),
-        axis.text.y = element_blank(),
-             plot.margin = margin(1, 1, 1, 1, "cm"),
+        plot.title = element_text(family = "mono",
+                                  face = "bold",
+                                  hjust = 0.5,
+                                  size = 12,
+                                  vjust = 5),
+        panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"), 
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
     size = 3),
+  plot.margin = margin(1, 1, 1, 1, "cm"),
         legend.position = "none") +
-  geom_label(data = self_made, aes(label = n),
-              fill = "white",
-             label.size = 0.5) 
+geom_text(aes(label = n, fontface = "bold", family = "mono"), hjust = -0.2, size = 2, colour = "black")
 ```
 
-###### Make just one more visualization that makes sense 
-```{r}
-industry <- billionaires %>% group_by(Industry) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n))
-industry
+#### It seems that across all of the 2021 Forbes Billionaires, Finance and Technology are the most popular industries, with observations of 371 and 366 billionaires respectively. Manufacturing is the third industry with 333 observed billionaires. On the lower end are telecom, casinos, and sports, with 32, 25, and 24 reported billionaires respectively. 
 
-combined_billionaires <- left_join(forbes_billionaires, billionaires, by = c("Name" = "Name"))
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
+trying2label <- combined_billionaires %>% group_by(Industry, Self_made) %>%
+  summarise(n = n()) %>% 
+  filter(!is.na(Self_made))
 
+forbes_test <- combined_billionaires %>% filter(!is.na(Self_made)) %>%
+  filter(Industry == "Finance & Investments" |
+           Industry == "Technology" |
+         Industry == "Manufacturing" |
+           Industry == "Fashion & Retail" |
+           Industry == "Healthcare" |
+           Industry == "Food & Beverage" |
+           Industry == "Real Estate" |
+           Industry == "Diversified" |
+           Industry == "Energy")
+```
 
-combined_billionaires2 <- combined_billionaires %>% separate(col = Education, into = c("Degree", "University"),
-                                 sep = ", ")
+#### How many of the 2021 Forbes Billionaires in the top industries are self-made? It should be noted that some observations did not record whether the billionaire was self-made and thus was excluded from the visualization.
 
-harvard <- combined_billionaires2 %>% filter(University == "Harvard University") 
-harvard
-
-harvard %>% group_by(Industry) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n))
-
-ggplot(data = harvard, aes(x = Degree, y = NetWorth.x)) +
-  geom_point() +
-  coord_flip() 
-
-## should do something with this to show the degree, self_made, networth, etc. 
-
-usa_billionaires <- combined_billionaires %>% filter(Country.x == "United States")
-ggplot(data = usa_billionaires, aes(x = Self_made)) +
-  geom_bar() 
-
-forbes_billionaires %>% group_by(Status) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n))
-
-tidy_education <- forbes_billionaires %>% 
-  separate(col = Education, into = c("Degree", "University"),
-                                 sep = ", ") %>%
-  select(Degree, University, everything())
-tidy_education
-
-tidy_education %>% group_by(Degree) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n))
-
-tidy_education %>% filter(University == "Harvard University")
-
-tidy_education2 <- tidy_education %>% filter(Degree == "Bachelor of Arts/Science" |
-                          Degree == "Master of Business Administration" |
-                          Degree == "Master of Science" |
-                          Degree == "Drop Out" |
-                          Degree == "Bachelor of Science" |
-                          Degree == "Bachelor of Science in Engineering" |
-                          Degree == "Doctorate" |
-                          Degree == "Diploma" |
-                          Degree == "Bachelor of Arts/Economic")
-
-
-ggplot(data = tidy_education2, aes(x = Degree, y = NetWorth)) +
-  geom_point(alpha = 0.4) +
-  coord_flip() +
-  labs(x = "Education Level",
-       y = "Net Worth")
-
-ggplot(data = tidy_education2, aes(x = Degree, y = NetWorth)) +
-  geom_jitter(alpha = 0.4) +
-  coord_flip() +
-  labs(x = "Education Level",
-       y = "Net Worth")
-
-ggplot(data = tidy_education2, aes(x = Degree, y = NetWorth)) +
-  geom_violin() +
-  coord_flip()
-``` 
-
-###### Showing All U.S. Billionaires 
-```{r}
-library(plotly)
-us_forbes_billionaires <- combined_billionaires %>% filter(Country.x == "United States")
-us_forbes_billionaires
-
-us_forbes_billionaires %>% group_by(Industry) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n))
-
-plot10 <- ggplot(data = us_forbes_billionaires, aes(x = NetWorth.x, y = Age.x,
-                                                    label = Name, colour = Industry)) +
-  geom_jitter() +
-  labs(x = "NetWorth",
-       y = "Age",
-       title = "Billionaires in the U.S.") +
-  theme(plot.title = element_text(face = "bold",
-                                  size = 15,
-                                  margin = margin(c(t = 10, b = 10))),
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(data = forbes_test, aes(x = Self_made, fill = Self_made)) +
+       geom_bar(colour = "black") +
+  facet_wrap(~Industry) +
+    scale_fill_brewer(palette = "Dark2")  +
+  labs(x = " ",
+       y = " ",
+       title = "How Many Forbes Billionaires Are Self-Made in the Top Industries?",
+       fill = " ",
+       caption = "True means Self-Made, False means Not Self-Made") +
+  theme(legend.position = "bottom") +
+  theme(legend.box.background = element_rect(size = 1),
+        plot.background = element_rect(
+          fill = "grey90",
+          colour = "black",
+          size = 3),
+        plot.margin = margin(1, 1, 1, 1, "cm"),
+        plot.title = element_text(family = "mono",
+                                  face = "bold",
+                                  margin = margin(c(t = 30)),
+                                  hjust = 0.5,
+                                  vjust = 8,
+                                  size = 10),
+        plot.caption = element_text(family = "mono",
+                                    face = "bold",
+                                    vjust = -3,
+                                    hjust = 0.5),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
+        legend.text = element_text(family = "mono",
+                                   face = "bold"),
+        legend.key.size = unit(0.5, 'cm'),
+        axis.text = element_text(family = "mono"),
+        axis.text.x = element_text(family = "mono",
+                                   face = "bold"),
         axis.ticks = element_blank(),
-        legend.title = element_text(face = "bold"),
-        axis.title = element_text(face = "bold"))
-
-ggplotly(plot10, tooltip = "label")
+        axis.text.y = element_text(family = "mono",
+                                   face = "bold"),
+        strip.text = element_text(family = "mono",
+                                  face = "bold"))
 ```
 
-###### Try to make the Map
-```{r}
-library(maps)
-library(tidyverse)
-state_df <- ggplot2::map_data("state")
+#### It seems that many of the billionaires are self-made. The proportion of self-made to not self-made billionaires is the largest in the finance, manufacturing, and technology industries. More billionaires seem to be self-made in the other industries as well, such as energy, fashion, food, health care, and real estate. However, it seems that there are slightly fewer self-made billionaires with diversified income. Again, some billionaire's self-made status was unreported in the data set.
 
-forbes_billionaires_geo <- read_csv(here("content/post/2022-04-26-2021-forbes-billionaires/forbes_billionaires_geo.csv"))
-forbes_billionaires_geo %>% select(geometry, everything())
-```
+# Find the data!
+
+[Sourav Roy on Kaggle](https://www.kaggle.com/roysouravcu/datasets) 
+
+
+
+
+
+[Alexander Bader on Kaggle](https://www.kaggle.com/alexanderbader/datasets)

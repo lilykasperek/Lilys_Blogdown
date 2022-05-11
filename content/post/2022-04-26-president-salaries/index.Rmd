@@ -1,40 +1,41 @@
 ---
 title: President Salaries
-author: R package build
-date: '2022-04-26'
+date: '2022-05-12'
+weight: 4
 slug: president-salaries
 categories: []
 tags: []
 ---
 
-## New Data Set 
+# President Salary
 
-## Potential questions:
-
-## How has President salary changed over time
-
-## Is there a predominant party or evenly split 
-
-## How much more do presidents make compared to vice presidents 
-
-## Has salary ever increased from term to term 
-
-## Aim for 4, with 1 being kable table!
+## If I would have had more time, I would have made visualizations using a data set detailing president and vice president salary. 
 
 ```{r}
 library(tidyverse)
-pvp_dataset <- read_csv("data/pvp_dataset.csv")
+library(here)
+pvp_dataset <- read_csv(here("data/pvp_dataset.csv"))
 pvp_dataset
 
-ggplot(data = pvp_dataset, aes(x = year, y = salary)) +
-  geom_line()
-
-pvp_dataset_2 <- read_csv("data/pvp_dataset 2.csv")
-pvp_dataset_2
-
-pres_salary <- pvp_dataset_2 %>% filter(position_title == "PRESIDENT OF THE UNITED STATES")
+pres_salary <- pvp_dataset %>% filter(position_title == "PRESIDENT OF THE UNITED STATES")
 pres_salary
 
+ggplot(data = pres_salary, aes(x = salary, y = year)) +
+  geom_line()
+
+icons <- pres_salary %>% filter(name == "Washington,George" |
+                                  name == "Lincoln,Abraham" |
+                         name == "Roosevelt,Franklin Delano" |
+                         name == "Nixon,Richard Milhous" |
+                         name == "Bush,George Walker" |
+                         name == "Obama,Barack Hussein,II" |
+                         name == "Trump,Donald John")
+icons
+
+ggplot(data = icons, aes(x = name, y = salary)) +
+  geom_col() +
+  coord_flip()
+ 
 ggplot(data = pres_salary, aes(x = year, y = salary)) +
   geom_line()
 
@@ -47,8 +48,8 @@ pres_salary %>% group_by(party) %>%
 
 ggplot(data = pres_salary, aes(x = salary, y = party)) +
   geom_point()
-
-ggplot(data = pres_salary, aes(x = , y = party, colour = salary)) +
-  geom_point()
 ```
 
+# Find the Data 
+
+[Adiquant on Kaggle](https://www.kaggle.com/adiquant)

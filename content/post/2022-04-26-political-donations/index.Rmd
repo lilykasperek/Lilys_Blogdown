@@ -1,19 +1,23 @@
 ---
-title: Political Donations
-author: R package build
-date: '2022-04-26'
+title: 'Political Donations'
+date: '2022-05-12'
+weight: 2
 slug: political-donations
 categories: []
 tags: []
 ---
 
-### Examining the Political Donations of American Professional Sports Team Owners 
+## Examining the Public Political Donations of American Professional Sports Team Owners From 2016 to 2020.
+
+#### For my first post I decided to visualize the data of public political donations made by wealthy professional sports team owners in the United States. Each visualization is accompanied by some relevant questions and possible answers to those questions. 
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 library(tidyverse)
 library(ggthemes)
 library(here)
+library(kableExtra)
 
-pol_donations <- read_csv(here("/Users/lilykasperek/Desktop/my-website/content/post/2022-03-22-first-post/sports-political-donations.csv"))
+pol_donations <- read_csv(here("data/political-donations.csv"))
 
 pol_donations <- pol_donations %>% rename(year = 'Election Year') %>% mutate(amount = parse_number(Amount)) %>% 
   mutate(Recipient = fct_recode(Recipient, Hillary_Victory_Fund = "HILLARY VICTORY FUND", 
@@ -26,10 +30,148 @@ library(plotly)
 options(scipen = 10)
 library(ggpmisc)
 library(ggrepel)
+
+pol_donations %>% group_by(Party) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+pol_donations %>% group_by(League) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
 ```
 
-###### What were the highest 25 Political Donations made by NFL team owners in 2016? Were the majority of these donations affiliated with a certain party? How much influence could NFL team owners have on elections? Is there any gender that dominates these donations?
-```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+## Starting Out: All League Data 
+
+#### Even though many observations are repeated with many owners making up hundreds of different donations, this visualization aims to show how many donations are made by owners who own one team from six different professional sports leagues in the United States from 2016 to 2020. I only used team owners who own one team because I felt examining every observation by League would complicate the visualization, as hundreds of team owners own two or three teams across different Leagues. It must also be noted that I decided to exclude data points of donations that are not available or associated with Independent, Bipartisan but mostly Democratic, and Bipartisan but mostly Republican organizations. I decided to do this because there are minimal observations for these parties. 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide', fig.height = 10, fig.width = 10}
+one_league_owners <- pol_donations %>% 
+  filter(League == "MLB" |
+           League == "NBA" |
+           League == "NFL" |
+           League == "NHL" |
+           League == "WNBA" |
+           League == "NASCAR")
+pls <- one_league_owners %>% mutate(league_ordered = fct_reorder(.f = League, .x = amount)) %>%
+  filter(Party == "Bipartisan" | 
+         Party == "Republican" |
+         Party == "Democrat") %>%
+  mutate(Party_3 = fct_relevel(Party, c("Republican", "Democrat", "Bipartisan")))
+
+
+one_league_owners2 <- pol_donations %>% 
+  filter(Owner == "Charles Johnson" |
+           Owner == "Micky Arison" |
+           Owner == "Jimmy and Susan Haslam" |
+           Owner == "Edward P. Roski Jr." |
+           Owner == "John Rogers" |
+           Owner == "Richard Childress") 
+
+one_league_owners2 %>% group_by(League) %>%
+  arrange(desc(amount))
+
+MLB <- pol_donations %>% filter(League == "MLB")
+NBA <- pol_donations %>% filter(League == "NBA")
+NFL <- pol_donations %>% filter(League == "NFL")
+NHL <- pol_donations %>% filter(League == "NHL")
+WNBA <- pol_donations %>% filter(League == "WNBA")
+NASCAR <- pol_donations %>% filter(League == "NASCAR")
+
+label <- pls %>% filter(amount == 1850000 & league_ordered == "MLB" |
+                          amount == 1250000 & league_ordered == "NBA" |
+                          amount == 449000 & league_ordered == "NFL" |
+                          amount == 500000 & league_ordered == "NHL" |
+                          amount == 290300 & league_ordered == "WNBA" |
+                          amount == 250000 & league_ordered == "NASCAR") 
+
+MLB %>% group_by(Owner) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+
+NBA %>% group_by(Owner) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+
+
+NFL %>% group_by(Owner) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+
+
+NHL %>% group_by(Owner) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+NHL %>% arrange(desc(amount))
+
+
+
+WNBA %>% group_by(Owner) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+
+
+NASCAR %>% group_by(Owner) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(data = pls, aes(x = league_ordered, y = amount)) +
+  geom_point(aes(colour = Party)) +
+  coord_flip() +
+  labs(x = " ",
+       y = " ", 
+       title = "Public Political Donations By League",
+       subtitle = "Only Looking at Three Most Popular Political Affiliations",
+       colour = "Party") +
+  geom_label_repel(data = label, aes(label = Owner, colour = Party_3), show.legend = FALSE) +
+   scale_colour_brewer(palette = "Dark2") +
+  theme(plot.title = element_text(family = "mono",
+                                  face = "bold",
+                                  hjust = 0.5,
+                                  margin = margin(c(t = 10,
+                                                    b = 10,
+                                                    vjust = 20))),
+        plot.subtitle = element_text(family = "mono",
+                                     face = "bold",
+                                     hjust = 0.5,
+                                     vjust = 5),
+        axis.text = element_text(family = "mono",
+                                 face = "bold"),
+        axis.title = element_text(family = "mono",
+                                  face = "bold",
+                                  margin = margin(c(t = 10,
+                                                    b = 10))),
+        legend.text = element_text(family = "mono",
+                                   face = "bold"),
+        legend.title = element_text(family = "mono",
+                                    face = "bold"),
+        legend.box.background = element_rect(size = 1.5),
+    plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"),
+    panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
+        plot.background = element_rect(
+    fill = "grey90",
+    colour = "black",
+    size = 3),
+    legend.position = "bottom") 
+```
+
+#### It appears many of these donations have been made by owners of MLB teams, even though as we'll see later, Charles Johnson has made over 200 donations alone. However, this visualization also highlights the most expensive public donation made by owners in each league. Charles Johnson's most expensive donation was over $1,500,000. Dan Gilbert made a staggering $1,250,000 donation as well. Ron Burke and Philip F. Anschutz have both made donations of $500,000. Janice S. McNair is close, with a donation of $449,000. Roger Penske made a $250,000 donation, and Kelly Loeffler donated $290,300. 
+
+## Looking at NFL Data 
+
+#### Who made the most expensive public political donations among NFL team owners in 2016 specifically? Are the majority of these donations affiliated with a certain party? How much influence could sports team owners have on elections? 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 high_donations <- pol_donations %>% filter(year == "2016" & League == "NFL") %>%
   mutate(amount = parse_number(Amount)) %>%
   arrange(desc(amount)) %>%
@@ -38,31 +180,36 @@ high_donations <- pol_donations %>% filter(year == "2016" & League == "NFL") %>%
   mutate(owner_ordered = fct_reorder(.f = Owner, .x = amount)) %>%
   mutate(party = fct_relevel(Party, c("Republican", "Democrat", "Bipartisan")))
 
+high_donations %>% group_by(Party) %>%
+  summarise(n = n())
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
 ggplot(data = high_donations, aes(x = amount, y = owner_ordered, label = Recipient, colour = party)) +
   geom_point(size = 3) +
   labs(x = " ", 
        y = " ",
-       title = "How Much Did NFL Owners Donate in 2016?",
+       title = "How Much Did They Spend in 2016?",
        colour = "Political Party",
        subtitle = "What Influence Could NFL Team Owners Have on Elections?") +
-  scale_colour_viridis_d() +
+   scale_colour_brewer(palette = "Dark2")  +
   theme_bw() +
   theme(plot.title = element_text(family = "mono",
                                   face = "bold",
-                                  size = 14,
+                                  size = 15,
                                   margin = margin(c(t = 20,
                                                     b = 20,
                                                     vjust = 15))),
         plot.subtitle = element_text(family = "mono",
                                      face = "italic",
-                                     size = 9,
+                                     size = 10,
                                      vjust = 4,
                                      hjust = 0.5),
         legend.title = element_text(family = "mono",
                                     face = "bold",
-                                    size = 10),
+                                    size = 8),
         legend.text = element_text(family = "mono",
-                                   size = 8),
+                                   size = 7),
         axis.text = element_text(family = "mono",
                                  size = 7),
         axis.text.x = element_text(face = "bold"),
@@ -71,8 +218,9 @@ ggplot(data = high_donations, aes(x = amount, y = owner_ordered, label = Recipie
                                                      t = 10))),
         legend.box.background = element_rect(size = 1.5),
         axis.ticks = element_blank(),
-        legend.key.size = unit(0.45, 'cm'),
-        plot.margin = margin(1, 1, 1, 1, "cm"),
+        legend.key.width = unit(0.45, 'cm'),
+        plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"),
+        panel.background = element_rect(colour = "black"), 
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
@@ -81,26 +229,103 @@ ggplot(data = high_donations, aes(x = amount, y = owner_ordered, label = Recipie
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-###### Which owners, across all leagues, have made the most political donations from this data set? How many have they made? Is there a certain gender that dominates? 
-```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+#### As we saw from the previous visualization, Janice S. McNair, owner of the Houston Texans, made the highest public political donation of all NFL owners from 2016 to 2020 with a donation of $449,000. This visualization displays some of the other top spenders who are responsible for the 25 most expensive public donations made by NFL team owners in the United States in 2016. It seems as though a majority of these team owners make public donations to organizations affiliated with the Republican party. Considering the donations made by NFL team owners, it may not be unreasonable to think that American sports team owners are greatly influential in American elections and politics. 
+
+#### Has the political leaning of public political donations made by NFL owners changed from 2016 to 2020? It should be noted I excluded points representing unavailable data and donations made to Bipartisan, but mostly Republican organizations. I did this because the top 25 highest donations made by NFL owners belonged to the Republican, Democrat, and Bipartisan parties and because these observations represented a very small portion of the data. 
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
+NFL <- pol_donations %>% filter(League == "NFL") %>%
+  filter(Party == "Bipartisan" |
+           Party == "Democrat" |
+           Party == "Republican")
+NFL 
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(data = NFL, aes(x = Party, fill = Party)) +
+  geom_bar(colour = "black") +
+  facet_wrap(~year) +
+   scale_fill_brewer(palette = "Dark2")  +
+  labs(title = "Changes in Donations by NFL Team Owners From 2016 to 2020",
+       subtitle = "Only Looking at Three Most Popular Political Affiliations",
+       y = "") +
+  theme(legend.position = "bottom") +
+  theme(plot.title = element_text(family = "mono",
+                                  face = "bold",
+                                  hjust = 0.5,
+                                  vjust = 5,
+                                  margin = margin(c(t = 10,
+                                                    b = 10)),
+                                  size = 12),
+        plot.subtitle = element_text(family = "mono",
+                                     face = "bold",
+                                     hjust = 0.5,
+                                     vjust = 7,
+                                     margin = margin(c(t = 10,
+                                                       b = 10)),
+                                     size = 9),
+        strip.text = element_text(family = "mono",
+                                  face = "bold"),
+    plot.margin = margin(1, 0.5, 1, 0, "cm"),
+    axis.text = element_text(family = "mono",
+                             face = "bold",
+                             size = 8),
+    axis.text.x = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_text(family = "mono",
+                              face = "bold"),
+         plot.background = element_rect(
+    fill = "grey90",
+    colour = "black",
+    size = 3)) +
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_text(margin = margin(c(t = 10,
+                                                b = 10,
+                                                vjust = -2))),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
+        legend.box.background = element_rect(fill = "grey90", size = 1.5),
+        legend.title = element_text(family = "mono",
+                                    face = "bold",
+                                    vjust = 1.3),
+        legend.text = element_text(family = "mono",
+                                   face = "bold"),
+        legend.key.size = unit(0.2, 'cm'))
+```
+
+#### It seems as though the majority of public donations made by NFL Team Owners specifically continue to be affiliated with the Republican party. However, it does seem that there was a slight increase in donations made to organizations associated with the Democratic party and a slight decrease in Bipartisan donations. It seems that donations decreased overall from 2016 to 2020 as well. 
+
+## Back to All League Data 
+
+#### Which team owners across all leagues from this data set have made the most public political donations from 2016 to 2020? How many donations have they made?  
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 45, fig.width = 45}
 library(knitr)
 library(pander)
 library(tidyverse)
-library(kableExtra)
 
 owner_rank2 <- pol_donations %>% group_by(Owner, Team, League) %>%
   summarise(n = n()) %>%
   arrange(desc(n)) %>%
   filter(n >= 65)
 
-kable(owner_rank2, caption = "<span style='font-size:15px'><b>Who Makes the Most Donations Across All Leagues?<b></span>", format = "html",
+kable(owner_rank2, caption = "<span style='font-size:20px'><b>Who Makes the Most Donations Across All Leagues?<b></span>", format = "html",
       col.names = c("Owner", "Team", "League", "Donations Made")) %>%
-  kable_styling(html_font = "Cambria", bootstrap_options = "striped",
+  kable_paper("hover") %>%
+  kable_styling(html_font = "Cambria",
                 font_size = 12,
-                fixed_thead = T) 
+                fixed_thead = T,
+                full_width = T) %>%
+  kable_styling(position = "center") 
 ```
 
-###### How much money was spent for these donations? Do these donations tend to be made to the same party for each owner or do they vary? What is the total sum of the donations made by these individuals? What is the average amount per donation? 
+#### As pointed out earlier, Charles Johnson is responsible for a considerable amount of donations made by MLB Team Owners. He has also made the most public donations out of those observed within this data set. He tops the list with a total of 213 public political donations. Jody Allen, Jerry Reinsdorf, and Herbert Simon were excluded from the first visualization because they own multiple teams. However, they are responsible for a great amount of public political donations as well. 
+
+#### How much money was spent for these public political donations? Do these donations tend to be made to the same party for each owner or do they vary? 
+
 ```{r, r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 owner_rank <- pol_donations %>% group_by(Owner, League) %>%
   summarise(n = n()) %>%
@@ -128,20 +353,20 @@ level_order <- factor(frequent$Owner, level = c('Stephen M. Ross', 'Herbert Simo
                                                 'Micky Arison', 'Charles Johnson'))
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
 ggplot(data = frequent, aes(x = amount, y = level_order, label = Amount, colour = Party)) +
   geom_point() +
-  labs(title = "How Many Donations Have They Made?",
-       subtitle = "Examining The Monetary Amount of Observed Political Donations",
+  labs(title = "How Much Money Have They Spent?",
+       subtitle = "Looking at the Monetary Value of Donations Made by Top Donators",
        y = " ",
        x = " ",
        colour = "Party") +
-  scale_colour_brewer(palette = "Dark2") +
+    scale_colour_brewer(palette = "Dark2")  +
     theme_bw() +
-  theme(legend.position = "bottom",
+  theme(legend.position = c(0.73, 0.2),
         plot.title = element_text(family = "mono",
                                   face = "bold",
-                                  size = 14,
+                                  size = 16,
                                    margin = margin(c(t = 10,
                                                     b = 30,
                                                     vjust = 18))),
@@ -153,18 +378,19 @@ ggplot(data = frequent, aes(x = amount, y = level_order, label = Amount, colour 
                                    size = 6),
         legend.title = element_text(family = "mono", 
                                     face = "bold",
-                                    size = 6),
+                                    size = 7),
         legend.text = element_text(family = "mono",
-                                   size = 5.2),
+                                   size = 7),
         plot.subtitle = element_text(family = "mono",
                                      face = "italic",
-                                     size = 8,
+                                     size = 8.5,
                                      vjust = 6,
                                      hjust = 0.5),
         axis.ticks = element_blank(),
         legend.key.size = unit(0.3, 'cm'),
         legend.key.width = unit(0.1, 'cm'),
-        plot.margin = margin(1, 2, 0.5, 0.5, "cm"),
+        plot.margin = margin(0.5, 0.3, 0.5, 0.5, "cm"),
+         panel.background = element_rect(colour = "black"), 
          plot.background = element_rect(
     fill = "grey90",
     colour = "black",
@@ -173,13 +399,21 @@ ggplot(data = frequent, aes(x = amount, y = level_order, label = Amount, colour 
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-###### What is the sum of all of the donations made by these owners? 
+#### It seems as though Charles Johnson has made some extremely expensive public political donations from 2016 to 2020, with one particular donation of $1,850,000. Several other donations he has made were $1,000,000 or more. Most of the team owners made donations in the thousands or tens of thousands range, with a lot of donations in the $100,000 to $250,000 range as well. Ken Kendrick for example, tends to make donations closer to around $5,000 to $10,000 but made one donation of $700,000. 
+
+#### What is the sum of all of the public political donations made by these owners from 2016 to 2020? 
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 sum_donations <- frequent %>% group_by(Owner) %>%
   summarise(sum = sum(amount)) %>%
   rename(Sum = 'sum') %>%
   arrange(desc(Sum))
 sum_donations
+
+sum_donations4 <- frequent %>% group_by(Owner, Team) %>%
+  summarise(sum = sum(amount)) %>%
+  rename(Sum = 'sum') %>%
+  arrange(desc(Sum))
 
 sum_donations2 <- pol_donations %>% group_by(Owner) %>%
   summarise(sum = sum(amount)) %>%
@@ -193,20 +427,29 @@ sum_donations2
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 library(knitr)
 kable(sum_donations)
+pol_donations %>% filter(Owner == "Dan DeVos")
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-kable(sum_donations, caption = "<span style='font-size:15px'><b>Sum of Donations<b></span>", format = "html",
-      col.names = c(" ", " ")) %>%
-  kable_styling(html_font = "Cambria", bootstrap_options = "striped", "hover",
-                font_size = 16, fixed_thead = T) 
+kable(sum_donations4, caption = "<span style='font-size:20px'><b>Sum of Donations<b></span>", format = "html",
+      col.names = c("Owner", "Team", "Sum")) %>%
+  kable_paper("hover") %>%
+  kable_styling(html_font = "Cambria", bootstrap_options = "hover",
+                font_size = 16, fixed_thead = T, full_width = T) %>%
+  kable_styling(position = "center")
 ```
 
-###### How many donations, out of the 213 made by Charles Johnson, were made to which political parties? 
+#### The table reveals that Charles Johnson has spent over $11,035,700 on public political donations from 2016 to 2020. Dan DeVos has spent over $2,000,000. Jerry Reinsdorf, Jimmy and Susan Haslam, Ken Kendrick, and Micky Arison have all soent over $1,000,000. The remaining team owners have each spent hundreds of thousands of dollars as well. 
+
+## Looking at Charles Johnson 
+
+### Charles Johnson has clearly made many public political donations. Let's look at the public donations he has made from 2016 to 2020 more specifically. 
+
+#### How many public political donations, out of the 213 made by Charles Johnson, were made to which parties? 
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 library(ggthemes)
-charles_johnson <- pol_donations %>% filter(Owner == "Charles Johnson") %>%
-  filter(year == 2016 | year == 2018 | year == 2020) 
+charles_johnson <- pol_donations %>% filter(Owner == "Charles Johnson") 
 
  cj_party <- charles_johnson %>% group_by(Party) %>%
   summarise(n = n()) %>%
@@ -216,11 +459,11 @@ charles_johnson <- pol_donations %>% filter(Owner == "Charles Johnson") %>%
 level_order2 <- factor(charles_johnson$Party, level = c('Democrat', 'Bipartisan, but mostly Republican', 'Republican'))
 ```
 
-```{r,  message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+```{r,  message = FALSE, warning = FALSE, echo = FALSE}
 ggplot(data = cj_party, aes(x = party, y = n, fill = Party)) +
   geom_col(colour = "black") +
   coord_flip() +
-  scale_fill_brewer(palette= "Pastel2") +
+  scale_fill_brewer(palette = "Dark2")  +
   labs(title = "Party Affiliation of Political Donations",
        x = " ",
        y = " ",
@@ -229,14 +472,14 @@ ggplot(data = cj_party, aes(x = party, y = n, fill = Party)) +
         plot.title = element_text(family = "mono",
                                   face = "bold",
                                   hjust = 0.5,
-                                  size = 14,
+                                  size = 13,
                                   margin = margin(c(t = 30,
                                                     b = 30)),
                                   vjust = 9),
         plot.subtitle = element_text(family = "mono",
                                      face = "bold",
                                      hjust = 0.5,
-                                     size = 14,
+                                     size = 13,
                                      vjust = 5),
         axis.text = element_text(family = "mono",
                                  face = "bold",
@@ -250,7 +493,12 @@ ggplot(data = cj_party, aes(x = party, y = n, fill = Party)) +
         axis.ticks.x = element_blank(),
         legend.key.size = unit(0.4, 'cm'),
         legend.key.width = unit(0.2, 'cm'),
-        plot.margin = margin(1, 2, 1, 1, "cm"),
+        plot.margin = margin(1, 1, 1, 1, "cm"),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
@@ -265,36 +513,46 @@ table_cjparty <- cj_party %>% arrange(desc(n)) %>%
   rename(Count = 'n')
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE}
-
+```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.width = 40}
 kable(table_cjparty, digits = 1, caption = "Count of Donations by Party",
       col.names = c("Party", "Count")) %>%
-  kable_styling(html_font = "Cambria", bootstrap_options = "striped", "hover",
-                font_size = 13, fixed_thead = T)
+  kable_paper("hover") %>%
+  kable_styling(html_font = "Cambria", bootstrap_options = "hover",
+                font_size = 13, fixed_thead = T, full_width = T) %>%
+  kable_styling(position = "center") 
 ```
 
-###### As we can see, most of the donations made by Charles Johnson were affiliated with the Republican party. What were these organizations and how many donations did Charles Johnson make to each of these organizations? 
+#### The bar chart shows that the greater majority of the public political donations made by Charles Johnson have been made to organizations affiliated with the Republican party. The table reveals that Charles Johnson has made 207 donations to Republican-affiliated organizations, 4 to Bipartisan affiliated organizations that lean Republican, and 2 organizations affiliated with the Democratic party.  
+
+#### As we can see, most of the public donations made by Charles Johnson were affiliated with the Republican party. What were some of these organizations? 
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 organizations <- charles_johnson %>% group_by(Recipient, Party) %>%
   summarise(n = n()) %>%
   arrange(desc(n)) %>%
-  filter(n >= 2)
+  filter(n >= 2) %>%
+  select(Recipient, Party)
 
 organizations2 <- charles_johnson %>% group_by(Recipient, Party) %>%
   summarise(n = n()) %>%
-  arrange(desc(n))
+  arrange(desc(n)) 
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-## Mess with Fonts 
-kable(organizations2, caption = "<span style='font-size:15px'><b>What Are Some Organizations Charles Johnson Donates To?<b></span>",
-      col.names = c("Recipient", "Political Party", "Amount of Donations Made"))  %>%
-  kable_styling(html_font = "Cambria", bootstrap_options = "striped",
-                font_size = 16, fixed_thead = T) %>%
-  scroll_box(height = "300px")
+kable(organizations, caption = "<span style='font-size:17px'><b>What Are Some Organizations Charles Johnson Donates To?<b></span>",
+      col.names = c("Recipient", "Political Party"))  %>%
+  kable_paper("hover") %>%
+  kable_styling(html_font = "Cambria",
+                font_size = 16, fixed_thead = T, full_width = T) %>% 
+scroll_box(height = "250px")
 ```
 
-###### What are some organizations that seem to be recieving the most donations across all owners and leagues? What political party are these organizations affiliated with? 
+#### Charles Johnson has donated to many different organizations. The organizations listed on the table are just some of the organizations Charles Johnson has donated to. Some of these organizations include Trump Victory and the Investment Company Institute Political Action Committee. 
+
+## Back to All League Data 
+
+#### What are some popular organizations observed throughout the data set? Is there any dominant political affiliation? 
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
 recipients <- pol_donations %>% group_by(Recipient, Party) %>%
   summarise(n = n()) %>%
@@ -310,7 +568,7 @@ new_names <- c("Collins For Senator", "McSally for Senate Inc.",
                "Office of the Commissioner of MLB PAC", "Gridirion PAC")
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 7, fig.width = 11}
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
 ggplot(data = recipients, aes(x = recipient, y = n, fill = Party)) +
   geom_col(colour = "black") +
   coord_flip() +
@@ -318,7 +576,7 @@ ggplot(data = recipients, aes(x = recipient, y = n, fill = Party)) +
        y = " ") +
   labs(title = "Organizations Receiving The Most Donations",
        subtitle = "Among All Owners") +
-  scale_fill_brewer(palette = "Accent") +
+   scale_fill_brewer(palette = "Dark2")  +
   theme(legend.position = "bottom") +
   scale_x_discrete(labels = new_names) +
   theme(plot.title = element_text(family = "mono",
@@ -350,18 +608,23 @@ ggplot(data = recipients, aes(x = recipient, y = n, fill = Party)) +
         axis.ticks = element_blank(),
         legend.key.size = unit(0.5, 'cm'),
         plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
+         panel.background = element_rect(colour = "black", fill = "white"), 
+      panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "grey90"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey90"),
         plot.background = element_rect(
     fill = "grey90",
     colour = "black",
     size = 3),
          legend.box.background = element_rect(size = 1.5)) +
     geom_text(data = recipients, aes(label = n, fontface = "bold"), 
-              size = 3.5, hjust = -0.25) +
+              size = 2.7, hjust = -0.25) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-```{r,  message = FALSE, warning = FALSE, echo = FALSE, results = 'hide'}
-pol_donations %>% group_by(League) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n))
-```
+#### Some popular organizations across all leagues seem to include the Gridiron Political Action Committee. Unsurprisingly, the Office of the Commissioner of the MLB Political Action Committee has received many donations as well. Consistent with the previous visualizations, many of these organizations are seemingly affiliated with the Republican party, with fewer organizations being Bipartisan or affiliated with the Democratic party.
+
+# Find the data!
+[Rahul Kapoor on Kaggle](https://www.kaggle.com/rahul253801/datasets) 
+
